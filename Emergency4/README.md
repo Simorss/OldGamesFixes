@@ -6,6 +6,21 @@ Choose a custom resolution and whether the menu and HUD should retain their
 original proportions or stretch across the entire screen. Gameplay adjusts its
 horizontal field of view while preserving the original vertical field of view.
 
+## Fixes
+
+- **Resolution** — custom widescreen and ultrawide resolutions supported by the game and graphics driver.
+- **Aspect Ratio** — gameplay camera proportions matched to the selected resolution.
+- **Field of View** — horizontal view correction while preserving the original vertical view.
+- **Menu and HUD** — centered original proportions or full-screen stretched scaling.
+- **Mouse Alignment** — matching interface coordinates, hit testing and clipping.
+
+## Options and tools
+
+- Interactive resolution and interface mode selection, entirely in English.
+- Automatic executable and configuration discovery, with manual selection when needed.
+- Preview without writing game files.
+- Original-file backups, repeated setting changes, restore and command-line options.
+
 ## Language and edition compatibility
 
 This version has **no game-language, executable-name or whole-file checksum
@@ -30,7 +45,7 @@ See [validation results](docs/validation.json).
 
 ## Quick start
 
-1. Download the ZIP from [Releases](https://github.com/Simorss/OldGamesFixes/releases)
+1. Download the ZIP from [Releases](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4)
    and extract it completely.
 2. Close the game and double-click **Emergency4-Fix.cmd**.
 3. Choose **Apply**, enter the game folder, enter your resolution, then select
