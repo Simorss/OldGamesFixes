@@ -4,10 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'Emergency4/src/**'
       - 'Emergency4/asi/**'
       - 'Emergency4/build-asi-release.ps1'
-      - 'Emergency4/build-release.ps1'
       - 'Emergency4/README*.md'
       - 'Emergency4/CHANGELOG.md'
       - 'Emergency4/docs/**'
@@ -101,12 +99,5 @@ jobs:
           }
           gh release view $tag --repo $env:GITHUB_REPOSITORY --json url,tagName,isPrerelease,assets
           if ($LASTEXITCODE -ne 0) { throw 'Release verification failed.' }
-          # Withdraw the earlier package containing non-English scripts/docs without deleting its history.
-          $legacyTag = 'emergency4-v1.0.0-beta.1'
-          gh release view $legacyTag --repo $env:GITHUB_REPOSITORY *> $null
-          if ($LASTEXITCODE -eq 0) {
-            gh release edit $legacyTag --repo $env:GITHUB_REPOSITORY --draft --latest=false --notes-file Emergency4/docs/LEGACY-RELEASE.md
-            if ($LASTEXITCODE -ne 0) { throw 'Could not withdraw the superseded non-English package.' }
-          }
           Write-Host 'Release publication completed.'
           $global:LASTEXITCODE = 0

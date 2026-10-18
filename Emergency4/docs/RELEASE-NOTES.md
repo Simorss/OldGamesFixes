@@ -21,15 +21,14 @@
 ## Installation
 
 1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from this release.
-2. Close the game. For an upgrade from the script patcher, first use the included `tools/Restore-LegacyFix.cmd` as described in the README.
+2. Close the game. If upgrading from an earlier on-disk patch, restore your original game files from their saved backups first.
 3. Extract the archive into the folder containing the actual game executable, preserving the `scripts` folder.
 4. Optionally edit `scripts/Emergency4.WidescreenFix.ini` to set resolution, menu/HUD scaling and FOV.
 5. Launch the game normally. Restart after changing the INI.
 
 The archive includes **x86 Ultimate ASI Loader v9.7.4** (`dinput8.dll`) and its
 license. Preserve an existing loader/mod DLL and follow the README if one is
-already installed. PowerShell is only used by the optional legacy restore tool.
-Python and a compiler are not required for normal ASI use.
+already installed. PowerShell, Python and a compiler are not required for normal ASI use.
 
 ## Uninstallation
 

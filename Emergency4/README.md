@@ -81,25 +81,18 @@ by the game, display and graphics driver. Accepted input ranges are 320–16384
 pixels wide and 200–16384 pixels high; valid input does not guarantee the engine
 can start in every display mode.
 
-## Upgrading from the previous fix
+## Upgrading from earlier patches
 
-For a clean migration, run `tools/Restore-LegacyFix.cmd` with the game closed,
-then enter the game folder. This optional tool restores the files preserved by
-the earlier script patcher, using its existing backup and integrity checks.
-Keep the backup folder until restoration is complete. No restore tool is
-needed for a fresh game installation.
-
-Restoration returns the state before the first use of that earlier patcher;
-older patches installed before it may still remain. The ASI can normalize
-recognized earlier project patches in memory and account for their previous
-camera aspect. It does not remove those changes from disk. Removing the ASI
-later returns to whatever executable/configuration was already on disk.
+If an earlier fix modified your game files, restore the original EXE and CFG
+from your saved backups before installing the ASI. Keep a copy of the original
+game files. The ASI can also normalize recognized earlier project patches in
+memory, but it does not remove those older changes from disk.
 
 ## Uninstallation
 
 Close the game and remove `scripts/Emergency4.WidescreenFix.asi` and its INI.
 Remove the bundled `dinput8.dll` only if no other mods use it. You can also
-remove this plugin's log and the optional tools/docs. No ASI backup restore
+remove this plugin's log and documentation. No ASI backup restore
 step is needed: the plugin itself does not write the game executable or CFG.
 The game can still save its own normal settings.
 

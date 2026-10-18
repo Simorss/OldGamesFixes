@@ -87,7 +87,7 @@ def main():
         if success:
             return output_file.read_bytes(), json.loads(layout_file.read_text())
 
-    spec = importlib.util.spec_from_file_location('legacy_verification', ROOT/'tests/verify_fix.py')
+    spec = importlib.util.spec_from_file_location('gui_emulation', pathlib.Path(__file__).with_name('gui_emulation.py'))
     emulator = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(emulator)
     cases = []
@@ -199,7 +199,7 @@ def main():
     checks.append('Private source executable unchanged')
     source_sha256 = {name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in (
         'asi/src/Engine.hpp','asi/src/Plugin.cpp','asi/src/Exports.def',
-        'asi/tests/RuntimeTest.cpp','asi/tests/EngineProbe.cpp')}
+        'asi/tests/RuntimeTest.cpp','asi/tests/EngineProbe.cpp','asi/tests/gui_emulation.py')}
     report = {'version':'2.0.0-beta.2','status':'PASS','source_sha256':source_sha256,'checks':checks,'cases':cases,
               'plugin_imports':dependencies,
               'limitations':'One actual executable, synthetic rebased fixtures and synthetic original-setter continuations. No real game launch or graphical validation; other regional builds, engine startup timing, custom mod UI and complete renderer behavior need in-game testing.'}
