@@ -2,17 +2,25 @@
 const search = document.getElementById('search');
 const filters = [...document.querySelectorAll('[data-filter]')];
 const cards = [...document.querySelectorAll('[data-category]')];
+const games = [...document.querySelectorAll('[data-game]')];
 let category = 'all';
 function filterProjects() {
   const query = search.value.trim().toLocaleLowerCase('en');
   let count = 0;
   for (const card of cards) {
-    const matches = (category === 'all' || card.dataset.category === category) && card.dataset.search.includes(query);
+    const matches = (category === 'all' || card.closest('[data-game]').dataset.game === category) && card.dataset.search.includes(query);
     card.hidden = !matches;
     if (matches) count++;
   }
+  let gameCount = 0;
+  for (const game of games) {
+    const projectCount = [...game.querySelectorAll('[data-category]')].filter(card => !card.hidden).length;
+    game.hidden = projectCount === 0;
+    game.querySelector('.game-project-count').textContent = `${projectCount} project${projectCount === 1 ? '' : 's'}`;
+    if (projectCount) gameCount++;
+  }
   document.getElementById('empty-state').hidden = count > 0;
-  document.getElementById('results').textContent = `${count} project${count === 1 ? '' : 's'} shown`;
+  document.getElementById('results').textContent = `${gameCount} game${gameCount === 1 ? '' : 's'}, ${count} project${count === 1 ? '' : 's'} shown`;
   for (const button of filters) {
     const active = button.dataset.filter === category;
     button.classList.toggle('active', active);
@@ -24,7 +32,7 @@ search.addEventListener('input', filterProjects);
 document.getElementById('reset').addEventListener('click', () => {category = 'all';search.value = '';filterProjects();search.focus();});
 // A deep link to a project should reveal it even after filtering the collection.
 function revealAnchor() {
-  if (['#emergency4', '#mod-launcher'].includes(location.hash)) {
+  if (['#game-emergency4', '#emergency4', '#mod-launcher'].includes(location.hash)) {
     category = 'all'; search.value = ''; filterProjects();
   }
 }

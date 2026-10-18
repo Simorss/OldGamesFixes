@@ -18,7 +18,7 @@
 <a class="skip-link" href="#projects">Skip to projects</a>
 <header class="header">
   <a class="brand" href="./" aria-label="Old Games Fixes home"><span class="brand-mark" aria-hidden="true">OG<span>F</span></span><span>OLD GAMES<span class="brand-line">FIXES<span class="brand-dot">.</span></span></span></a>
-  <nav aria-label="Main navigation"><a class="nav-active" href="#projects">The collection</a><a href="#installation">Installation</a><a class="github-link" href="https://github.com/Simorss/OldGamesFixes">GitHub <span aria-hidden="true">↗</span></a></nav>
+  <nav aria-label="Main navigation"><a class="github-link" href="https://github.com/Simorss/OldGamesFixes">GitHub <span aria-hidden="true">↗</span></a></nav>
 </header>
 <main>
   <section class="hero" aria-labelledby="hero-title">
@@ -29,7 +29,7 @@
       <div class="hero-actions"><a class="button primary" href="#projects">Explore the fixes <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/Simorss/OldGamesFixes">View the source <span aria-hidden="true">↗</span></a></div>
       <div class="hero-meta"><span>WINDOWS PC</span><span>OPEN SOURCE</span><span>FREE DOWNLOADS</span></div>
     </div>
-    <a class="hero-preview" href="#emergency4" aria-label="Explore Emergency 4 Widescreen Fix">
+    <a class="hero-preview" href="#game-emergency4" aria-label="Explore Emergency 4 fixes and tools">
       <div class="preview-top"><span><span class="live-dot"></span> IN THE COLLECTION</span><span>01 / EM4</span></div>
       <div class="preview-image"><img src="screenshots/with-fix.png" alt="Emergency 4 running with the widescreen fix and proportional HUD" width="3440" height="1440" fetchpriority="high"><span class="resolution">3440 × 1440 <span>ULTRAWIDE</span></span></div>
       <div class="preview-bottom"><div><small>FEATURED FIX</small><strong>Emergency 4</strong></div><span class="round-arrow" aria-hidden="true">↗</span></div>
@@ -37,13 +37,16 @@
   </section>
 
   <section class="collection" id="projects" aria-labelledby="collection-title">
-    <div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="collection-title">Find your next fix<span class="accent">.</span></h2></div><span class="collection-count">1 GAME <span>/</span> 2 PROJECTS</span></div>
+    <div class="section-heading"><div><p class="eyebrow">THE GAME LIBRARY</p><h2 id="collection-title">Find your game<span class="accent">.</span></h2></div><span class="collection-count">1 GAME <span>/</span> 2 PROJECTS</span></div>
     <div class="toolbar">
-      <div class="filters" role="group" aria-label="Filter projects"><button type="button" class="filter active" data-filter="all" aria-pressed="true">All projects <span>02</span></button><button type="button" class="filter" data-filter="fix" aria-pressed="false">Widescreen fixes <span>01</span></button><button type="button" class="filter" data-filter="tool" aria-pressed="false">Tools &amp; extras <span>01</span></button></div>
+      <div class="filters" role="group" aria-label="Filter by game"><button type="button" class="filter active" data-filter="all" aria-pressed="true">All games <span>01</span></button><button type="button" class="filter" data-filter="emergency4" aria-pressed="false">Emergency 4</button></div>
       <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search the collection…" aria-label="Search projects" autocomplete="off"></label>
     </div>
     <p class="sr-only" id="results" role="status" aria-live="polite">2 projects shown</p>
-    <div id="empty-state" class="empty-state" hidden><h3>No projects found.</h3><p>Try “Emergency”, “HUD” or “launcher”, or reset the filters.</p><button type="button" class="button secondary" id="reset">Show all projects</button></div>
+    <div id="empty-state" class="empty-state" hidden><h3>No games or projects found.</h3><p>Try “Emergency”, “HUD” or “launcher”, or reset the filters.</p><button type="button" class="button secondary" id="reset">Show all games</button></div>
+
+    <section class="game-group" id="game-emergency4" data-game="emergency4" aria-labelledby="game-emergency4-title">
+      <div class="game-heading"><div><p class="eyebrow">GAME / 01</p><h3 id="game-emergency4-title">Emergency 4</h3><p class="game-editions">Emergency 4 · Deluxe · 911: First Responders</p></div><span class="game-project-count">2 projects</span></div>
 
     <article class="project-card" id="emergency4" data-category="fix" data-search="emergency 4 deluxe 911 first responders widescreen ultrawide asi fov hud menu resolution windowed">
       <div class="project-heading"><div class="project-label"><span class="project-number">01</span><span>WIDESCREEN FIX</span></div><span class="badge release">RELEASE 1.0</span></div>
@@ -61,7 +64,7 @@
           <noscript><p class="caption">Enable JavaScript for the interactive comparison. <a href="screenshots/with-fix.png">Open the corrected screenshot</a>.</p></noscript>
         </div>
         <div class="project-info">
-          <p class="eyebrow">EMERGENCY 4 / DELUXE / 911: FIRST RESPONDERS</p><h3>Emergency 4<br><span>Widescreen Fix</span></h3>
+          <p class="eyebrow">EMERGENCY 4 / DELUXE / 911: FIRST RESPONDERS</p><h4>Emergency 4<br><span>Widescreen Fix</span></h4>
           <p class="project-description">Give your emergency services room to work. A wider view of the action, with menus and HUD that keep their original proportions.</p>
           <ul class="features"><li><strong>Resolution &amp; aspect ratio</strong><span>Custom resolutions, widescreen and ultrawide.</span></li><li><strong>Field of view</strong><span>Expand the horizontal view while preserving vertical framing.</span></li><li><strong>Menu, HUD &amp; mouse alignment</strong><span>Choose proportional or stretched interface scaling.</span></li><li><strong>Windowed mode</strong><span>Switch between fullscreen and windowed in the INI.</span></li></ul>
           <div class="tags"><span>Windows</span><span>ASI plugin</span><span>INI configuration</span></div>
@@ -74,9 +77,10 @@
     <article class="project-card tool-card" id="mod-launcher" data-category="tool" data-search="emergency 4 deluxe em4smd simple mod launcher mods cmd tools bonus">
       <div class="project-heading"><div class="project-label"><span class="project-number">02</span><span>TOOLS &amp; EXTRAS</span></div><span class="badge">BONUS RELEASE · 1.0</span></div>
       <div class="tool-main"><div class="terminal" aria-label="Example of the Simple Mod Launcher"><div class="terminal-title"><span class="terminal-dots" aria-hidden="true">● ● ●</span><span>EM4SMD.cmd</span><span>CMD</span></div><div class="terminal-body"><p class="terminal-muted">Emergency 4 Simple Mod Launcher</p><p><span class="terminal-number">1</span> - Los Angeles Mod v2.1<br><span class="terminal-number">2</span> - Your other mod<br><span class="terminal-number">0</span> - Exit</p><p>Select a mod number: <span class="terminal-selected">1</span></p><p class="terminal-muted">Launching: Los Angeles Mod v2.1<span class="cursor" aria-hidden="true">_</span></p></div><div class="terminal-caption">ILLUSTRATIVE PREVIEW · YOUR INSTALLED MODS WILL BE LISTED</div></div>
-      <div class="project-info"><p class="eyebrow">A SMALL TOOL FOR YOUR MOD FOLDER</p><h3>Simple Mod Launcher</h3><p class="project-description">Pick a number. Launch your mod. EM4SMD reads the folders in <code>Mods</code> and starts Emergency 4 directly with your selection.</p><ul class="features compact"><li><strong>Automatic mod list</strong><span>Refreshed from your Mods folder on every run.</span></li><li><strong>One small CMD file</strong><span>Place it beside Em4Deluxe.exe or in a direct subfolder.</span></li></ul><div class="tags"><span>Windows PowerShell required</span><span>Independent of the ASI fix</span></div></div></div>
+      <div class="project-info"><p class="eyebrow">A SMALL TOOL FOR YOUR MOD FOLDER</p><h4>Simple Mod Launcher</h4><p class="project-description">Pick a number. Launch your mod. EM4SMD reads the folders in <code>Mods</code> and starts Emergency 4 directly with your selection.</p><ul class="features compact"><li><strong>Automatic mod list</strong><span>Refreshed from your Mods folder on every run.</span></li><li><strong>One small CMD file</strong><span>Place it beside Em4Deluxe.exe or in a direct subfolder.</span></li></ul><div class="tags"><span>Windows PowerShell required</span><span>Independent of the ASI fix</span></div></div></div>
       <div class="project-footer"><div class="footer-links"><a href="https://github.com/Simorss/OldGamesFixes/tree/main/Emergency4/SimpleModLauncher">Instructions &amp; source <span aria-hidden="true">↗</span></a></div><div class="download-actions"><a class="text-link" href="https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4-smd">Release notes</a><a class="button secondary" href="https://github.com/Simorss/OldGamesFixes/releases/download/emergency4-smd/EM4SMD.cmd">Download EM4SMD.cmd <span aria-hidden="true">↓</span></a></div></div>
     </article>
+    </section>
   </section>
 
   <section class="installation" id="installation" aria-labelledby="install-title"><div><p class="eyebrow">BACK TO THE GAME</p><h2 id="install-title">Less setup.<br>More playtime.</h2><a class="text-link" href="https://github.com/Simorss/OldGamesFixes/issues">Need a hand? Report an issue ↗</a></div><ol class="steps"><li><span class="step-number">01</span><div><h3>Choose your download</h3><p>Get the fix or tool you need. Each project has its own instructions and release notes.</p></div></li><li><span class="step-number">02</span><div><h3>Follow the project instructions</h3><p>Extract the ASI fix beside the game executable, or copy the launcher into place. Keep existing mod and loader files in mind.</p></div></li><li><span class="step-number">03</span><div><h3>Make it yours</h3><p>Adjust the fix’s INI for your resolution, interface proportions and windowed mode. Restart the game after changes.</p></div></li></ol></section>

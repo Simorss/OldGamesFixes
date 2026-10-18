@@ -11,8 +11,11 @@ external fonts. All interface text is in English.
 - `assets/app.js`: category filters, search and the screenshot comparison.
 - `favicon.svg`: site icon.
 
-When adding a project, update the project totals, filter counts and searchable
-keywords as well as the card. Download links are deliberately pinned to the
+Projects are grouped by game using a `section.game-group[data-game]` wrapper.
+Keep fixes and bonus tools for the same game in that section. When adding a game,
+add its game filter, heading and project cards, and update the totals and searchable
+keywords. Search hides empty game groups and updates their visible project count.
+Download links are deliberately pinned to the
 project's own release tag and asset; this keeps bonus tools separate from fixes.
 
 ## Publishing
