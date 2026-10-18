@@ -8,6 +8,22 @@
 - **Menu and HUD** — choose a centered interface with original proportions or full-screen stretched scaling. This setting affects menu and HUD together.
 - **Mouse Alignment** — adjust interface coordinates, hit testing and clipping alongside proportional menu/HUD scaling.
 
+## Before / After
+
+[**Open the interactive comparison ↔**](https://simorss.github.io/OldGamesFixes/emergency4/)
+— drag left or right to compare the original screenshots at 3440×1440.
+
+**Without fix**
+
+![Without fix: stretched gameplay and HUD](https://raw.githubusercontent.com/Simorss/OldGamesFixes/main/Emergency4/screenshots/without-fix.png)
+
+**With fix**
+
+![With fix: corrected view and proportional, centered HUD](https://raw.githubusercontent.com/Simorss/OldGamesFixes/main/Emergency4/screenshots/with-fix.png)
+
+The captures were taken at different moments. Screenshots and the comparison
+page are hosted separately; the game ZIP still contains only the three runtime files.
+
 ## Options and Tools
 
 - **Windowed Mode** — set `Windowed=1` in the INI for windowed mode; `0` selects fullscreen.

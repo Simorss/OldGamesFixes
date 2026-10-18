@@ -14,6 +14,23 @@ horizontal field of view while preserving the original vertical field of view.
 - **Menu and HUD** — centered original proportions or full-screen stretched scaling.
 - **Mouse Alignment** — matching interface coordinates, hit testing and clipping.
 
+## Before / After
+
+[**Open the interactive comparison ↔**](https://simorss.github.io/OldGamesFixes/emergency4/)
+— drag the divider left or right to reveal the difference.
+
+Original 3440×1440 screenshots, captured at different moments. The fix corrects
+the widescreen view and keeps the HUD proportional and centered when
+`KeepUIAspectRatio=1`.
+
+### Without fix
+
+[![Without fix: stretched gameplay and HUD](screenshots/without-fix.png)](screenshots/without-fix.png)
+
+### With fix
+
+[![With fix: corrected view and proportional, centered HUD](screenshots/with-fix.png)](screenshots/with-fix.png)
+
 ## Options and tools
 
 - Automatic desktop resolution or a custom `ResX` / `ResY` in the INI.

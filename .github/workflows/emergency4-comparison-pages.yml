@@ -1,0 +1,46 @@
+name: Emergency 4 screenshot comparison
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Emergency4/comparison/**'
+      - 'Emergency4/screenshots/**'
+      - '.github/workflows/emergency4-comparison-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: emergency4-comparison-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Prepare comparison page
+        run: |
+          mkdir -p _site/emergency4 _site/screenshots
+          cp Emergency4/comparison/index.html _site/emergency4/index.html
+          cp Emergency4/screenshots/*.png _site/screenshots/
+          printf '%s\n' '<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=emergency4/"><title>Emergency 4 Comparison</title><a href="emergency4/">Open the Emergency 4 comparison</a></html>' > _site/index.html
+          touch _site/.nojekyll
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload the page
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy the interactive comparison
+        id: deployment
+        uses: actions/deploy-pages@v4
