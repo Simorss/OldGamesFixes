@@ -9,16 +9,15 @@ interactive comparison link opens the GitHub Pages version:
 
 https://simorss.github.io/OldGamesFixes/emergency4/
 
+The [project catalogue](https://simorss.github.io/OldGamesFixes/) also includes a
+compact comparison directly inside the Emergency 4 project card.
+
 ## Publishing
 
-In repository **Settings → Pages → Build and deployment → Source**, choose
-**GitHub Actions**. Then run the **Emergency 4 screenshot comparison** workflow
-from the Actions tab. Subsequent changes to this page or its screenshots
-publish automatically.
+GitHub Pages is configured to use GitHub Actions. The **Old Games Fixes website**
+workflow publishes the homepage, this comparison and the screenshots together.
+Changes to `site/`, this page or its screenshots deploy automatically. The
+workflow can also be run manually from the Actions tab.
 
-The connector used to manage repository contents does not have the
-administrative permission needed to enable Pages settings. Page activation
-must be completed by the repository owner.
-
-Screenshots and the page are not included in the game ZIP. The original PNG
+Screenshots and the website are not included in the game ZIP. The original PNG
 files are kept in `../screenshots/` without resizing, cropping or retouching.
