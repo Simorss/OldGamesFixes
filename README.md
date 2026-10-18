@@ -22,18 +22,14 @@ As a bonus, this repo also includes a few **Italian localization/translation pat
 
 | Game | Fix Type | Status |
 |------|----------|--------|
-| *Game Title 1* | Compatibility fix | ✅ Working |
-| *Game Title 2* | Bug fix | ✅ Working |
-| *Game Title 3* | Italian translation | 🌍 Bonus |
-
-> Replace this table with your actual list of games and patches.
+| [Emergency 4 Deluxe / Edizione Oro](./Emergency4/README.md) | Custom resolution, gameplay FOV and menu/HUD aspect ratio | 🧪 1.0.0-beta.1 |
 
 ---
 
 ## 📥 Installation
 
-1. Download the patch for your game from the [`patches/`](./patches) folder.
-2. Follow the instructions in the game's specific `README.md`.
+1. Download the ready-to-use package for your game from [Releases](https://github.com/Simorss/OldGamesFixes/releases).
+2. Extract the archive and follow the instructions in the game's specific `README.md`.
 3. Enjoy!
 
 ---
@@ -46,10 +42,11 @@ Contributions are welcome! If you have a fix, patch, or translation to share:
 2. Create a new branch (`git checkout -b patch/game-name`)
 3. Submit a pull request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Please include the game edition, executable hash and clear reproduction steps.
 
 <div align="center">
 
 Made with ❤️ for retro gaming preservation
 
 </div>
+

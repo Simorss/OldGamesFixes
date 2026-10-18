@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "imageBase": 4194304,
+  "exeName": "Em4Deluxe.exe",
+  "configName": "em4deluxe.cfg",
+  "originalSha256": "17924F0E847FB0173DDBD5FDB5D5CBBF68F75CF1DB6FDCADB155F964A350FDC9",
+  "legacySha256": [
+    "E3C7A79570D405E3E7E7ADEDB840E382405ED12CF11049841C7529C24ED0A8F0",
+    "43AD206E3BFA3EF8FE972D754A36C0AD8EAE82EBCE0B7E8EBFA478AACDA8632E"
+  ],
+  "patches": [
+    {
+      "id": "GameplayAspect",
+      "offset": 493847,
+      "original": "ABAAAA3F"
+    },
+    {
+      "id": "UiMouseWidth",
+      "offset": 6486836,
+      "original": "00008044"
+    },
+    {
+      "id": "UiMouseHeight",
+      "offset": 6486840,
+      "original": "00004044"
+    },
+    {
+      "id": "UiWidth",
+      "offset": 6488216,
+      "original": "00008044"
+    },
+    {
+      "id": "UiHeight",
+      "offset": 6488220,
+      "original": "00004044"
+    },
+    {
+      "id": "UiReciprocalWidth",
+      "offset": 6488344,
+      "original": "0000803A"
+    },
+    {
+      "id": "UiClipWidth",
+      "offset": 5456998,
+      "original": "00008044"
+    },
+    {
+      "id": "UiClipHeight",
+      "offset": 5456993,
+      "original": "00004044"
+    },
+    {
+      "id": "UiRootCall",
+      "offset": 5457015,
+      "original": "E8945C0000"
+    },
+    {
+      "id": "UiRootXStub",
+      "offset": 5473281,
+      "original": "CCCCCCCCCCCCCCCCCCCCCCCCCC"
+    },
+    {
+      "id": "UiRootYStub",
+      "offset": 5473313,
+      "original": "CCCCCCCCCCCCCCCCCCCCCCCCCC"
+    },
+    {
+      "id": "UiReciprocalY",
+      "offset": 5473345,
+      "original": "CCCCCCCC"
+    },
+    {
+      "id": "UiYReference_93841A",
+      "offset": 5473308,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_938559",
+      "offset": 5473629,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_9385A0",
+      "offset": 5473700,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_9385EB",
+      "offset": 5473775,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_938A45",
+      "offset": 5474889,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_938AC3",
+      "offset": 5475015,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_938ACB",
+      "offset": 5475023,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_938CD3",
+      "offset": 5475543,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_938EA5",
+      "offset": 5476009,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_9390B3",
+      "offset": 5476535,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_93925F",
+      "offset": 5476963,
+      "original": "E85F9E00"
+    },
+    {
+      "id": "UiYReference_939337",
+      "offset": 5477179,
+      "original": "E85F9E00"
+    }
+  ]
+}

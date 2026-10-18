@@ -1,0 +1,21 @@
+# Generated release assets belong in GitHub Releases.
+/GUIDA-PUBBLICAZIONE.md
+/OldGamesFixes-sorgenti.zip
+/Emergency4/archive/
+**/release/*.zip
+**/release/SHA256SUMS.txt
+**/release/.staging-*/
+# Private fixtures, game files, backups and Python caches must stay local.
+**/.work/
+**/test-fixtures/
+**/__pycache__/
+*.pyc
+Em4Deluxe.exe
+em4.exe
+em4deluxe.cfg
+em4.cfg
+*.dll
+*.bak
+**/*-Backup/
+**/Data/
+**/Mods/
