@@ -1,6 +1,6 @@
 # Emergency 4 Resolution & Aspect Ratio Fix
 
-**1.1.0-beta.1 · Windows · English interface and documentation**
+**1.1.0-beta.1**
 
 Choose a custom resolution and whether the menu and HUD should retain their
 original proportions or stretch across the entire screen. Gameplay adjusts its
@@ -20,28 +20,6 @@ horizontal field of view while preserving the original vertical field of view.
 - Automatic executable and configuration discovery, with manual selection when needed.
 - Preview without writing game files.
 - Original-file backups, repeated setting changes, restore and command-line options.
-
-## Language and edition compatibility
-
-This version has **no game-language, executable-name or whole-file checksum
-allowlist**. It discovers the camera and GUI routines from machine-code
-signatures, follows their pointers and branches, and maps virtual addresses to
-the executable's actual PE file offsets. Renamed executables, different resource
-data and changed file offsets are supported when the required engine routines
-are present.
-
-The patcher is intended for the Emergency 4 family, including Deluxe and
-911: First Responders, regardless of localization. Compatibility is determined
-by the **Vision 7.1 / MSVC x86 instruction family**, rather than the language or
-the label on the game box. It does not claim that every retail, digital, packed,
-protected or previously modified build has been tested. A build whose required
-instructions cannot be identified uniquely is left unchanged. Removing this
-structural check would not make different machine code compatible.
-
-Only one actual game executable was available for validation. Additional
-renamed, resource-modified, repacked and rebased fixtures are explicitly
-synthetic tests, not independently acquired English or regional game releases.
-See [validation results](docs/validation.json).
 
 ## Quick start
 
@@ -76,19 +54,6 @@ pixels wide and 200–16384 pixels high; valid input does not guarantee the engi
 can start in every display mode. Avoid changing resolution through the game's
 old options after applying the fix; rerun the patcher to change it.
 
-## Command-line examples
-
-```powershell
-.\Emergency4-Fix.ps1 -GamePath 'D:\Games\Emergency4' -Width 3440 -Height 1440 -InterfaceMode Original -NonInteractive
-.\Emergency4-Fix.ps1 -GamePath 'D:\Games\Emergency4' -Width 1920 -Height 1080 -InterfaceMode Stretched -NonInteractive
-.\Emergency4-Fix.ps1 -GamePath 'D:\Games\Emergency4' -Executable 'em4.exe' -Config 'em4.cfg' -Width 2560 -Height 1440 -InterfaceMode Original -Preview -NonInteractive
-.\Emergency4-Fix.ps1 -GamePath 'D:\Games\Emergency4' -Restore -NonInteractive
-```
-
-`-Executable` and `-Config` are optional filenames inside the game folder.
-`-Preview` reports the detected engine and proposed settings without writing
-files. Non-interactive use requires explicit filenames if detection is ambiguous.
-
 ## Backup and restore
 
 The first application saves the original executable and configuration in
@@ -105,23 +70,3 @@ SHA-256 remains in use for backup integrity and detection of edits made after
 installation. These checks are not a list of permitted game versions or
 languages. If you install a different game build or another binary patch, first
 restore this fix or preserve/move its existing backup before creating a new one.
-
-## Validation status
-
-The earlier 3440x1440 gameplay correction was confirmed in-game. Automated
-tests execute the actual GUI coordinate and hit-testing routines in x86
-emulation, exercise multiple resolutions, restore exact files, and test dynamic
-engine recognition. Generalized UI appearance and other real executable builds
-still need in-game validation, so this release remains **beta**.
-
-Movies, embedded 3D views and custom mod interfaces may need separate work.
-Game assets and user configuration files are not distributed. No game launch
-or UI automation is performed by the patcher or developer tests.
-
-## Project files
-
-- `src/`: English interactive patcher, CMD entry point and C# engine scanner.
-- `tests/`: integration and x86 emulation tests using private local fixtures.
-- `docs/`: implementation notes, release notes and validation results.
-- `build-release.ps1`: builds the distributable ZIP and checksum.
-- `release/`: generated release packages, excluded from source control.
