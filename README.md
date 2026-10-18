@@ -23,6 +23,7 @@ As a bonus, this repo also includes a few **Italian localization/translation pat
 | Game README | Fix Type | Download |
 |------|----------|--------|
 | [Emergency 4 / Deluxe / 911: First Responders](./Emergency4/README.md) | ASI resolution, FOV and menu/HUD scaling | [✅ 1.0 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4) |
+| [Emergency 4 Simple Mod Launcher](./Emergency4/SimpleModLauncher/README.md) | Bonus: numbered mod selection and direct launch | [1.0 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4-smd) |
 
 ---
 

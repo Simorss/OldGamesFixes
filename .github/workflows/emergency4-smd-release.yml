@@ -1,0 +1,80 @@
+name: Emergency 4 Simple Mod Launcher release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Emergency4/SimpleModLauncher/**'
+      - '.github/workflows/emergency4-smd-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: emergency4-smd-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Validate launcher without starting the game
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $path = 'Emergency4/SimpleModLauncher/EM4SMD.cmd'
+          $text = [IO.File]::ReadAllText((Join-Path $PWD $path))
+          $parts = $text -split '(?m)^:__POWERSHELL__\r?$',2
+          if ($parts.Count -ne 2) { throw 'Missing launcher script.' }
+          $tokens=$null; $errors=$null
+          $null = [Management.Automation.Language.Parser]::ParseInput($parts[1],[ref]$tokens,[ref]$errors)
+          if ($errors.Count) { throw ($errors | Out-String) }
+          $fixture = Join-Path $env:RUNNER_TEMP 'em4smd-validation'
+          New-Item -ItemType Directory -Force -Path (Join-Path $fixture 'Mods/Test Mod') | Out-Null
+          [IO.File]::WriteAllBytes((Join-Path $fixture 'Em4Deluxe.exe'),[byte[]]@())
+          $env:EM4_MOD_LAUNCHER = Join-Path $fixture 'EM4SMD.cmd'
+          $script:answers = [Collections.Generic.Queue[string]]::new()
+          $script:answers.Enqueue('invalid')
+          $script:answers.Enqueue('1')
+          function Read-Host { param([string]$Prompt) return $script:answers.Dequeue() }
+          function Start-Process {
+            param($FilePath,$WorkingDirectory,$ArgumentList)
+            if ($FilePath -ne (Join-Path $fixture 'Em4Deluxe.exe')) { throw 'Incorrect executable.' }
+            if ($WorkingDirectory -ne $fixture) { throw 'Incorrect working directory.' }
+            if (($ArgumentList -join ' ') -ne '-game -mod "Test Mod"') { throw 'Incorrect mod arguments.' }
+            Write-Host 'PASS: numbered selection and quoted mod arguments verified; no game was started.'
+          }
+          & ([scriptblock]::Create($parts[1]))
+
+      - name: Publish the bonus release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tag = 'emergency4-smd'
+          $folder = 'Emergency4/SimpleModLauncher'
+          gh api "repos/$env:GITHUB_REPOSITORY/git/ref/tags/$tag" *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh api --method PATCH "repos/$env:GITHUB_REPOSITORY/git/refs/tags/$tag" -f "sha=$env:GITHUB_SHA" -F force=false
+          } else {
+            gh api --method POST "repos/$env:GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/$tag" -f "sha=$env:GITHUB_SHA"
+          }
+          if ($LASTEXITCODE -ne 0) { throw 'Could not update the launcher tag.' }
+          gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release edit $tag --repo $env:GITHUB_REPOSITORY --title 'Emergency 4 Simple Mod Launcher' --notes-file "$folder/RELEASE-NOTES.md" --prerelease=false --latest=false
+            if ($LASTEXITCODE -ne 0) { throw 'Could not update the bonus release.' }
+            gh release upload $tag "$folder/EM4SMD.cmd" --repo $env:GITHUB_REPOSITORY --clobber
+          } else {
+            gh release create $tag "$folder/EM4SMD.cmd" --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'Emergency 4 Simple Mod Launcher' --notes-file "$folder/RELEASE-NOTES.md" --latest=false
+          }
+          if ($LASTEXITCODE -ne 0) { throw 'Bonus publication failed.' }
+          gh release view $tag --repo $env:GITHUB_REPOSITORY --json url,tagName,isPrerelease,assets
+          if ($LASTEXITCODE -ne 0) { throw 'Bonus release verification failed.' }
