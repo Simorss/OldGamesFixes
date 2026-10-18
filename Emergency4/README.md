@@ -27,10 +27,9 @@ horizontal field of view while preserving the original vertical field of view.
 
 1. Download **Emergency4.WidescreenFix-v1.0.zip** from
    [Releases](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4).
-2. Close the game. If you used the old script patcher, see **Upgrading from earlier patches** below.
-3. Extract the complete archive into the folder containing the **actual game executable**, preserving the `scripts` folder.
-4. Optionally edit `scripts/Emergency4.WidescreenFix.ini`.
-5. Launch the game normally.
+2. Extract the complete archive into the folder containing the **actual game executable**, preserving the `scripts` folder.
+3. Optionally edit `scripts/Emergency4.WidescreenFix.ini`.
+4. Launch the game normally.
 
 The required files are `dinput8.dll`, `scripts/Emergency4.WidescreenFix.asi`
 and `scripts/Emergency4.WidescreenFix.ini`. No PowerShell setup, Python or
