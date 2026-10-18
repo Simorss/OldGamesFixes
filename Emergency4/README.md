@@ -21,7 +21,6 @@ horizontal field of view while preserving the original vertical field of view.
 - `KeepUIAspectRatio` selects centered original proportions or full-screen stretched menu/HUD scaling.
 - Automatic FOV correction, preserving the game's configured focal parameter; optional `BaseFOV` override.
 - In-memory engine recognition and corrections, without writing the game EXE or CFG.
-- English INI comments and an initialization log beside the ASI.
 
 ## Installation
 
