@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param([string]$Compiler = 'cl', [string]$LoaderArchive)
 $ErrorActionPreference = 'Stop'
+$ProgressPreference = 'SilentlyContinue'
 $version = (Get-Content (Join-Path $PSScriptRoot 'asi/VERSION') -Raw).Trim()
 $build = Join-Path $PSScriptRoot 'asi/.work/build'
 $release = Join-Path $PSScriptRoot 'release'
@@ -48,7 +49,7 @@ $loaderHash = '14b3a1ad018899571ac9aa01482977f3c6d49e6cba99f552d01c5acacd1315e1'
 if (!$LoaderArchive) {
     $LoaderArchive = Join-Path $build 'Ultimate-ASI-Loader-v9.7.4.zip'
     if (!(Test-Path -LiteralPath $LoaderArchive)) {
-        Invoke-WebRequest -Uri 'https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader-NoPDB.zip' -OutFile $LoaderArchive
+        Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader-NoPDB.zip' -OutFile $LoaderArchive
     }
 }
 if ((Get-FileHash -LiteralPath $LoaderArchive -Algorithm SHA256).Hash -ne $loaderHash) { throw 'Official loader archive checksum mismatch.' }

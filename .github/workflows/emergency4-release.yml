@@ -32,16 +32,17 @@ jobs:
           persist-credentials: false
 
       - name: Validate and build the distributable
-        shell: powershell
+        shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
+          $ProgressPreference = 'SilentlyContinue'
           $report = Get-Content Emergency4/docs/validation-asi.json -Raw | ConvertFrom-Json
           if ($report.status -ne 'PASS') { throw 'The local ASI validation report is not passing.' }
           # Use the same pinned x86 toolchain as the native private-fixture tests.
           $tools = Join-Path $env:RUNNER_TEMP 'emergency4-toolchain'
           New-Item -ItemType Directory -Force -Path $tools | Out-Null
           $archive = Join-Path $tools 'w64devkit-x86.7z.exe'
-          Invoke-WebRequest -Uri 'https://github.com/skeeto/w64devkit/releases/download/v2.10.1/w64devkit-x86-2.10.1.7z.exe' -OutFile $archive
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/skeeto/w64devkit/releases/download/v2.10.1/w64devkit-x86-2.10.1.7z.exe' -OutFile $archive
           if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne '8821e6e4aa42d7eb42bf0cbabd18c4175fb0422bf96f4a178e1530b4ca69c73f') { throw 'Compiler archive checksum mismatch.' }
           & 7z x $archive "-o$tools" -y -bso0 -bsp0
           if ($LASTEXITCODE -ne 0) { throw 'Compiler extraction failed.' }
