@@ -12,7 +12,7 @@
 
 static_assert(sizeof(void*)==4,"Build this plugin for x86.");
 namespace {
-constexpr const char* Version="2.0.0-beta.2";
+constexpr const char* Version="1.0";
 HMODULE moduleHandle=nullptr;
 std::once_flag initialized;
 FILE* logFile=nullptr;

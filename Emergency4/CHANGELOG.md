@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0 — Official release
+
+- Publish the current ASI as the first official public release, numbered 1.0.
+- Include resolution, aspect ratio, FOV, menu/HUD, mouse alignment and windowed/fullscreen configuration.
+- Keep the public ZIP limited to the loader DLL, ASI plugin and commented INI.
+- Maintain documentation, validation reports and GPT-6.1 Sol development credits on GitHub.
+- No gameplay implementation changes from the preceding preview.
+
+## Development previews
+
+The versions below were development previews published before official 1.0.
+
 ## 2.0.0-beta.2
 
 - Add `Windowed` to the INI: `1` selects windowed mode and `0` selects fullscreen.

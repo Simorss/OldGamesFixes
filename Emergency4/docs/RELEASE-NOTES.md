@@ -1,4 +1,4 @@
-**Version 2.0.0-beta.2 · Windows · ASI · Beta**
+**Official release 1.0 · Windows · ASI**
 
 ## Fixes
 
@@ -27,7 +27,7 @@ preserved inside the INI comments.
 
 ## Installation
 
-1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from this release.
+1. Download **Emergency4.WidescreenFix-v1.0.zip** from this release.
 2. Close the game. If upgrading from an earlier on-disk patch, restore your original game files from their saved backups first.
 3. Extract the archive into the folder containing the actual game executable, preserving the `scripts` folder.
 4. Optionally edit `scripts/Emergency4.WidescreenFix.ini` to set resolution, menu/HUD scaling and FOV.
@@ -49,7 +49,7 @@ regardless of language. Recognition uses engine instruction signatures rather
 than executable filenames or a whole-file checksum allowlist. Builds with
 unrecognized or ambiguous instructions are left unchanged.
 
-This is a **beta**. One actual executable and additional synthetic variants
+One actual executable and additional synthetic variants
 were tested; support for every regional, retail, digital or protected build is
 not established. Full engine startup and visual appearance need further in-game validation.
 Movies, embedded 3D views and custom mod interfaces may require separate fixes.

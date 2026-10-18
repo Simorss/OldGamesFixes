@@ -1,6 +1,6 @@
 # Emergency 4 Resolution & Aspect Ratio Fix
 
-**2.0.0-beta.2 · ASI**
+**1.0 · ASI**
 
 Choose a custom resolution and whether the menu and HUD should retain their
 original proportions or stretch across the entire screen. Gameplay adjusts its
@@ -25,7 +25,7 @@ horizontal field of view while preserving the original vertical field of view.
 
 ## Installation
 
-1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from
+1. Download **Emergency4.WidescreenFix-v1.0.zip** from
    [Releases](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4).
 2. Close the game. If you used the old script patcher, see **Upgrading from earlier patches** below.
 3. Extract the complete archive into the folder containing the **actual game executable**, preserving the `scripts` folder.
@@ -116,7 +116,7 @@ regardless of language. Recognition uses Vision 7.1 / MSVC x86 engine
 instructions; executable names and whole-file hashes are not allowlisted.
 Unrecognized or ambiguous code is left unpatched, with details in the log.
 
-**Beta:** one actual executable, synthetic variants, native hook tests and
+**Validation:** one actual executable, synthetic variants, native hook tests and
 24 resolution/interface emulation cases were validated. Full engine startup,
 visual appearance and additional regional releases still need in-game testing.
 Movies, embedded 3D views and custom mod interfaces may require separate work.

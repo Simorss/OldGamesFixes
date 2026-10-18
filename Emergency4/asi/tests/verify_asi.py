@@ -200,7 +200,7 @@ def main():
     source_sha256 = {name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in (
         'asi/src/Engine.hpp','asi/src/Plugin.cpp','asi/src/Exports.def',
         'asi/tests/RuntimeTest.cpp','asi/tests/EngineProbe.cpp','asi/tests/gui_emulation.py')}
-    report = {'version':'2.0.0-beta.2','status':'PASS','source_sha256':source_sha256,'checks':checks,'cases':cases,
+    report = {'version':'1.0','status':'PASS','source_sha256':source_sha256,'checks':checks,'cases':cases,
               'plugin_imports':dependencies,
               'limitations':'One actual executable, synthetic rebased fixtures and synthetic original-setter continuations. No real game launch or graphical validation; other regional builds, engine startup timing, custom mod UI and complete renderer behavior need in-game testing.'}
     a.report.parent.mkdir(parents=True,exist_ok=True)

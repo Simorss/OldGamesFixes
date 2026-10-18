@@ -1,6 +1,6 @@
 # ASI implementation and validation
 
-Version 2.0 runs as a native x86 DLL named `Emergency4.WidescreenFix.asi`.
+Release 1.0 runs as a native x86 DLL named `Emergency4.WidescreenFix.asi`.
 Ultimate ASI Loader v9.7.4 loads it through `dinput8.dll` and calls its exported
 `InitializeASI` outside the loader lock. `DllMain` only records the module
 handle and disables thread notifications. Initialization is guarded once.
@@ -120,4 +120,4 @@ methods and hit testing execute in Unicorn across multiple resolutions.
 
 Only one actual executable was available. These tests do not establish support
 for every regional release, full engine startup, complete rendering or modded
-interfaces. **In-game visual validation is still required; this is a beta.**
+interfaces. Additional real builds and complete in-game rendering remain subject to validation.

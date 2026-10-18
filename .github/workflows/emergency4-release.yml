@@ -85,7 +85,7 @@ jobs:
             $arguments = @('release','edit',$tag,'--repo',$env:GITHUB_REPOSITORY,'--title',$title,
               '--notes-file','Emergency4/docs/RELEASE-NOTES.md')
             if ($version.Contains('-')) { $arguments += @('--prerelease=true','--latest=false') }
-            else { $arguments += '--prerelease=false' }
+            else { $arguments += @('--prerelease=false','--latest=true') }
             & gh @arguments
             if ($LASTEXITCODE -ne 0) { throw 'Release description update failed.' }
             gh release upload $tag $zip $sums --repo $env:GITHUB_REPOSITORY --clobber
@@ -94,8 +94,19 @@ jobs:
             $arguments = @('release','create',$tag,$zip,$sums,'--repo',$env:GITHUB_REPOSITORY,
               '--target',$env:GITHUB_SHA,'--title',$title,'--notes-file','Emergency4/docs/RELEASE-NOTES.md')
             if ($version.Contains('-')) { $arguments += @('--prerelease','--latest=false') }
+            else { $arguments += '--latest=true' }
             & gh @arguments
             if ($LASTEXITCODE -ne 0) { throw 'GitHub release publication failed.' }
+          }
+          # The fixed game page offers the current package; source history is retained.
+          $assetJson = gh release view $tag --repo $env:GITHUB_REPOSITORY --json assets
+          if ($LASTEXITCODE -ne 0) { throw 'Could not inspect release assets.' }
+          $currentName = [IO.Path]::GetFileName($zip)
+          foreach ($asset in ($assetJson | ConvertFrom-Json).assets) {
+            if ($asset.name -match '^Emergency4(?:\.WidescreenFix|-ResolutionFix)-v.+\.zip$' -and $asset.name -ne $currentName) {
+              gh release delete-asset $tag $asset.name --repo $env:GITHUB_REPOSITORY --yes
+              if ($LASTEXITCODE -ne 0) { throw "Could not retire the previous package: $($asset.name)" }
+            }
           }
           gh release view $tag --repo $env:GITHUB_REPOSITORY --json url,tagName,isPrerelease,assets
           if ($LASTEXITCODE -ne 0) { throw 'Release verification failed.' }
