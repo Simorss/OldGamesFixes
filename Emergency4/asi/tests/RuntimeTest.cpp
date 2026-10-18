@@ -29,8 +29,8 @@ int main(int argc,char** argv) {
         // GUI/camera bytes must match the separately generated patch plan.
         for(size_t i=0;i<wanted.size();i++)if(wanted[i]!=before[i])
             em4::require(mapped[i]==wanted[i],"Applied game patch differs from the plan.");
-        for(auto obj:{layout.widthObject,layout.heightObject,layout.fovObject}) {
-            float wantedValue=obj==layout.widthObject?float(resolutionX):(obj==layout.heightObject?float(resolutionY):focal);
+        for(auto obj:{layout.widthObject,layout.heightObject,layout.fovObject,layout.fullscreenObject}) {
+            float wantedValue=obj==layout.fullscreenObject?float(!windowed):(obj==layout.widthObject?float(resolutionX):(obj==layout.heightObject?float(resolutionY):focal));
             float got;std::memcpy(&got,reinterpret_cast<void*>(obj+0x14),4);
             em4::require(got==wantedValue,"Initial CVar override is wrong.");
         }
@@ -45,15 +45,16 @@ int main(int argc,char** argv) {
         for(uint32_t entry:layout.setters) {
             Setter method=reinterpret_cast<Setter>(mapped+entry);
             for(int repeat=0;repeat<3;repeat++) {
-                for(auto obj:{layout.widthObject,layout.heightObject,layout.fovObject}) {
+                for(auto obj:{layout.widthObject,layout.heightObject,layout.fovObject,layout.fullscreenObject}) {
                     std::memset(reinterpret_cast<void*>(obj+0x20),0x5a,0x50);
                     em4::require(method(reinterpret_cast<void*>(obj),123),"Setter return value was not preserved.");
-                    float expectedValue=obj==layout.widthObject?float(resolutionX):(obj==layout.heightObject?float(resolutionY):
-                        (forcedBaseFov?float(forcedBaseFov*(4.0/3.0)/(double(resolutionX)/resolutionY)):float(123*focalFactor)));
+                    float expectedValue=obj==layout.fullscreenObject?float(!windowed):(obj==layout.widthObject?float(resolutionX):(obj==layout.heightObject?float(resolutionY):
+                        (forcedBaseFov?float(forcedBaseFov*(4.0/3.0)/(double(resolutionX)/resolutionY)):float(123*focalFactor))));
                     float got;std::memcpy(&got,reinterpret_cast<void*>(obj+0x14),4);
                     em4::require(got==expectedValue,"Typed setter did not enforce resolution/FOV.");
                     int integer;std::memcpy(&integer,reinterpret_cast<void*>(obj+0x18),4);
                     em4::require(integer==int(expectedValue),"Integer CVar state does not match its float.");
+                    em4::require(*reinterpret_cast<uint8_t*>(obj+0x1c)==(expectedValue!=0),"Boolean CVar state does not match its float.");
                     for(int j=0x20;j<0x70;j++)em4::require(*reinterpret_cast<uint8_t*>(obj+j)==0x5a,"A string representation was overwritten.");
                 }
                 em4::require(method(unrelated,123),"An unrelated setter return changed.");

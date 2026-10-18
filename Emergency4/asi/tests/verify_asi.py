@@ -119,14 +119,16 @@ def main():
         ini.write_text('[MAIN]\n'+text, encoding='ascii')
         run(runtime, fixture, '0x10000000', expected)
 
-    runtime_case('ResX=3440\nResY=1440\n')
+    runtime_case('ResX=3440\nResY=1440\nWindowed=0\n')
+    runtime_case('ResX=3440\nResY=1440\nWindowed=1\n')
+    checks.append('Windowed=0 and Windowed=1 enforce native fullscreen state through all five typed setters, including boolean consistency')
     runtime_case('ResX=1920\nResY=1080\nBaseFOV=350\n')
     checks.append('Native initialization, five x86 detours/gateways, return/stack preservation, unrelated CVars, stable repeated assignments and one-time initialization passed')
     runtime_case('ResX=0\nResY=0\n')
     checks.append('Automatic desktop resolution initialized successfully')
     runtime_case('Enabled=0\n',expected='disabled')
     for text in ('ResX=3440\nResY=0\n', 'ResX=abc\nResY=1440\n',
-                 'ResX=-1\nResY=1440\n','KeepUIAspectRatio=7\n','BaseFOV=-1\n'):
+                 'ResX=-1\nResY=1440\n','KeepUIAspectRatio=7\n','BaseFOV=-1\n','Windowed=2\n','Windowed=-1\n','Windowed=abc\n'):
         runtime_case(text,expected='reject')
     checks.append('Disabled plugin and invalid INI settings left all mapped game bytes unchanged')
 
@@ -139,6 +141,17 @@ def main():
     bad_rebased[layout['aspect']-6] = 0x90
     bad.write_bytes(bad_rebased)
     runtime_case('ResX=3440\nResY=1440\n',bad,'reject')
+    missing_fullscreen = bytearray(source)
+    fullscreen_name = missing_fullscreen.find(b'r_fullscreen\0')
+    assert fullscreen_name >= 0
+    missing_fullscreen[fullscreen_name] = ord('x')
+    bad.write_bytes(missing_fullscreen)
+    probe(bad,success=False)
+    bad_fullscreen = bytearray(rebased)
+    bad_fullscreen[fullscreen_name] = ord('x')
+    bad.write_bytes(bad_fullscreen)
+    runtime_case('ResX=3440\nResY=1440\nWindowed=1\n',bad,'reject')
+    checks.append('Missing fullscreen CVar recognition leaves all game memory unchanged')
     ambiguous = bytearray(source)
     root = layout['rootCall']-23
     text = next(s for s in pe.sections if s.Characteristics&0x20000000)
@@ -187,7 +200,7 @@ def main():
     source_sha256 = {name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in (
         'asi/src/Engine.hpp','asi/src/Plugin.cpp','asi/src/Exports.def',
         'asi/tests/RuntimeTest.cpp','asi/tests/EngineProbe.cpp')}
-    report = {'version':'2.0.0-beta.1','status':'PASS','source_sha256':source_sha256,'checks':checks,'cases':cases,
+    report = {'version':'2.0.0-beta.2','status':'PASS','source_sha256':source_sha256,'checks':checks,'cases':cases,
               'plugin_imports':dependencies,
               'limitations':'One actual executable, synthetic rebased fixtures and synthetic original-setter continuations. No real game launch or graphical validation; other regional builds, engine startup timing, custom mod UI and complete renderer behavior need in-game testing.'}
     a.report.parent.mkdir(parents=True,exist_ok=True)

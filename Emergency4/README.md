@@ -1,6 +1,6 @@
 # Emergency 4 Resolution & Aspect Ratio Fix
 
-**2.0.0-beta.1 · ASI**
+**2.0.0-beta.2 · ASI**
 
 Choose a custom resolution and whether the menu and HUD should retain their
 original proportions or stretch across the entire screen. Gameplay adjusts its
@@ -17,6 +17,7 @@ horizontal field of view while preserving the original vertical field of view.
 ## Options and tools
 
 - Automatic desktop resolution or a custom `ResX` / `ResY` in the INI.
+- `Windowed=1` enables windowed mode; `Windowed=0` selects fullscreen.
 - `KeepUIAspectRatio` selects centered original proportions or full-screen stretched menu/HUD scaling.
 - Automatic FOV correction, preserving the game's configured focal parameter; optional `BaseFOV` override.
 - In-memory engine recognition and corrections, without writing the game EXE or CFG.
@@ -24,7 +25,7 @@ horizontal field of view while preserving the original vertical field of view.
 
 ## Installation
 
-1. Download **Emergency4.WidescreenFix-v2.0.0-beta.1.zip** from
+1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from
    [Releases](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4).
 2. Close the game. If you used the old script patcher, see **Upgrading from the previous fix** below.
 3. Extract the complete archive into the folder containing the **actual game executable**, preserving the `scripts` folder.
@@ -49,6 +50,7 @@ as the included Ultimate ASI Loader does by default.
 Enabled = 1
 ResX = 3440
 ResY = 1440
+Windowed = 0
 KeepUIAspectRatio = 1
 BaseFOV = 0
 ```
@@ -57,6 +59,7 @@ BaseFOV = 0
 |---|---|
 | `Enabled` | `1` enables the plugin; `0` leaves game memory unchanged. |
 | `ResX`, `ResY` | Set both dimensions, or set both to `0` for the desktop resolution of the monitor under the mouse pointer at startup. |
+| `Windowed` | `1` enables windowed mode; `0` selects fullscreen. Restart the game after changing it. |
 | `KeepUIAspectRatio` | `1` keeps original menu/HUD proportions; `0` stretches them across the display. |
 | `BaseFOV` | `0` uses the game's configured focal parameter with automatic aspect correction. A positive integer overrides the original 4:3 baseline; this is not an angle in degrees. |
 

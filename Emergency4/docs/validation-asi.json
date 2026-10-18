@@ -1,18 +1,20 @@
 {
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "status": "PASS",
   "source_sha256": {
-    "asi/src/Engine.hpp": "6267844881472bf2044d5320469ee1c1ea6439c0b2566daaa9a1ac873d517b0a",
-    "asi/src/Plugin.cpp": "893ca98548b63910993d222f597c43cb7e745695dc71d70e13e8deb88e53dc8a",
+    "asi/src/Engine.hpp": "bec02453ba2a4fd117fe2c026f401e605bfcbc08d14a27efad54d772a1c6697b",
+    "asi/src/Plugin.cpp": "f7228b3dfb1e5c2d4fb7800de3489292ae91b6aad828af68b4cdbd94f66e549a",
     "asi/src/Exports.def": "65170accdf057eb8a1b14ccddf5ab9b60b9af3e4360ddbfad1f29e1f16fe4601",
-    "asi/tests/RuntimeTest.cpp": "30b3486fe9b64e93582679f339c208e5a53ad4d498d1355c8549744078631fb3",
+    "asi/tests/RuntimeTest.cpp": "8ceb8e16d1bbaaf4a667ec04418bd15d7f42895789679ec86ecc3d3af1bc7289",
     "asi/tests/EngineProbe.cpp": "7bbae338c948960ddb39bd9469de5edb1181b2948a660b8dd424ae1bafaa7489"
   },
   "checks": [
     "24 resolution/UI combinations and 120 actual x86 GUI hit tests passed",
+    "Windowed=0 and Windowed=1 enforce native fullscreen state through all five typed setters, including boolean consistency",
     "Native initialization, five x86 detours/gateways, return/stack preservation, unrelated CVars, stable repeated assignments and one-time initialization passed",
     "Automatic desktop resolution initialized successfully",
     "Disabled plugin and invalid INI settings left all mapped game bytes unchanged",
+    "Missing fullscreen CVar recognition leaves all game memory unchanged",
     "Missing and ambiguous engine signatures rejected before applying patches",
     "Recognized legacy executable normalized in memory; previous-aspect FOV recovery verified",
     "Ultimate ASI Loader loaded the actual release plugin through dinput8.dll; an unrelated host was safely rejected",

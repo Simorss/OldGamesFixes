@@ -122,7 +122,7 @@ struct Layout {
     Bytes baseline;
     uint32_t aspect, forwardX, forwardY, inverseX, inverseY;
     uint32_t width, height, reciprocalX, reciprocalY, mouseW, mouseH, clipW, clipH, rootCall, rootInitializer;
-    uint32_t globalW,globalH,fovObject, widthObject,heightObject;
+    uint32_t globalW,globalH,fovObject, widthObject,heightObject,fullscreenObject;
     int defaultFov;
     float previousAspect;
     std::vector<uint32_t> verticalRefs, setters;
@@ -245,6 +245,25 @@ inline Layout inspect(const Image& p) {
         l.setters.push_back(at);
     }
     require(shortFrames==2 && longFrames==2 && floatFrames==1,"Incomplete CVar setter family.");
+    // Identify the boolean fullscreen CVar by its engine name and constructor,
+    // then verify that constructor calls the recognized boolean setter family.
+    matches.clear();
+    for(auto at:p.find("68 ?? ?? ?? ?? 6A 02 6A ?? 68 ?? ?? ?? ?? B9 ?? ?? ?? ?? E8 ?? ?? ?? ??")) {
+        try { if(p.z(p.offset(p.u32(at+10)))=="r_fullscreen" && b.at(at+8)<=1) matches.push_back(at); }
+        catch(const std::exception&) {}
+    }
+    uint32_t fullscreenCtor=one(matches,"fullscreen CVar constructor");
+    l.fullscreenObject=p.u32(fullscreenCtor+15);
+    require(p.writable(p.offset(l.fullscreenObject),0x70),"Fullscreen CVar is outside writable game data.");
+    uint32_t booleanCtor=p.offset(p.branch(fullscreenCtor+19));matches.clear();
+    for(uint32_t at=booleanCtor;at<booleanCtor+256;at++)if(equal(b,at,{0xe8})) {
+        try {
+            uint32_t target=p.offset(p.branch(at));
+            if(std::find(l.setters.begin(),l.setters.end(),target)!=l.setters.end() &&
+                equal(b,target+21,{0x83,0xec,0x60}) && equal(b,target+53,{0x53,0x8a,0x5c,0x24,0x78})) matches.push_back(target);
+        } catch(const std::exception&) {}
+    }
+    one(matches,"boolean fullscreen setter");
     return l;
 }
 inline Bytes build(const Image& p,const Layout& l,int width,int height,bool proportional) {

@@ -1,4 +1,4 @@
-**Version 2.0.0-beta.1 · Windows · ASI · Beta**
+**Version 2.0.0-beta.2 · Windows · ASI · Beta**
 
 ## Fixes
 
@@ -10,6 +10,8 @@
 
 ## Options and Tools
 
+- **Windowed Mode** — set `Windowed=1` in the INI for windowed mode; `0` selects fullscreen.
+
 - **Resolution** — automatic desktop detection or explicit `ResX` / `ResY` in the INI.
 - **Interface Mode** — `KeepUIAspectRatio=1` keeps original menu/HUD proportions; `0` stretches the interface across the screen.
 - **FOV** — automatic correction of the game's configured focal parameter; optional `BaseFOV` override.
@@ -18,7 +20,7 @@
 
 ## Installation
 
-1. Download **Emergency4.WidescreenFix-v2.0.0-beta.1.zip** from this release.
+1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from this release.
 2. Close the game. For an upgrade from the script patcher, first use the included `tools/Restore-LegacyFix.cmd` as described in the README.
 3. Extract the archive into the folder containing the actual game executable, preserving the `scripts` folder.
 4. Optionally edit `scripts/Emergency4.WidescreenFix.ini` to set resolution, menu/HUD scaling and FOV.

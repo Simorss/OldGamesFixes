@@ -30,7 +30,7 @@ Each setter starts with the verified complete six-byte instruction
 `mov eax, fs:[0]`. A gateway copies that instruction and jumps back. The
 fastcall wrapper forwards the original thiscall and argument, preserves its
 boolean result, and enforces numeric values only after a successful assignment
-to one of the three target CVars. Other variables are left alone. The CVar's
+to one of the four target CVars. Other variables are left alone. The CVar's
 string representations are retained, so the engine's normal configuration
 writer can preserve the user's original settings.
 
@@ -49,6 +49,17 @@ Two zero resolution values select the current physical desktop mode of the
 monitor under the mouse pointer at startup. Explicit values set the resolution
 instead. Resolution overrides remain active for the process; restart after
 editing the INI and avoid changing display settings in the old game menu.
+
+## Windowed mode
+
+`Windowed=1` forces the native boolean `r_fullscreen` CVar to false;
+`Windowed=0` forces it to true. Its object is discovered by its named boolean
+constructor, which must call the recognized boolean setter. The same hooks
+enforce its float, integer and boolean numeric representations after successful
+assignments, including config loading. The original string representation and
+CFG file are not rewritten. Invalid values stop initialization before writes.
+This uses the engine's native windowed mode, without changing window styles or
+adding borderless behavior. Restart the game after changing the option.
 
 ## Menu, HUD and mouse
 

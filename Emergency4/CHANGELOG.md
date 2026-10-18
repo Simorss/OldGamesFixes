@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0-beta.2
+
+- Add `Windowed` to the INI: `1` selects windowed mode and `0` selects fullscreen.
+- Recognize the native `r_fullscreen` CVar and enforce its inverse in memory through the existing verified setters.
+- Keep float, integer and boolean CVar representations consistent, preserving saved configuration strings.
+- Add windowed/fullscreen, invalid-value and missing-fullscreen-signature tests.
+
 ## 2.0.0-beta.1
 
 - Replace the interactive installation workflow with a native x86 ASI and commented English INI.

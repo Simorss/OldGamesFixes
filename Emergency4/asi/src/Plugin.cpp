@@ -12,13 +12,14 @@
 
 static_assert(sizeof(void*)==4,"Build this plugin for x86.");
 namespace {
-constexpr const char* Version="2.0.0-beta.1";
+constexpr const char* Version="2.0.0-beta.2";
 HMODULE moduleHandle=nullptr;
 std::once_flag initialized;
 FILE* logFile=nullptr;
 uint32_t gameBase=0;
 em4::Layout layout;
 int resolutionX=0,resolutionY=0;
+int windowed=0;
 float focal=160;
 double focalFactor=1;
 int forcedBaseFov=0;
@@ -76,6 +77,7 @@ void enforce(void* self) {
     uint32_t address=reinterpret_cast<uint32_t>(self);float value;
     if(address==layout.widthObject)value=float(resolutionX);
     else if(address==layout.heightObject)value=float(resolutionY);
+    else if(address==layout.fullscreenObject)value=windowed?0.f:1.f;
     else if(address==layout.fovObject) {
         float raw;std::memcpy(&raw,reinterpret_cast<uint8_t*>(self)+0x14,4);
         if(forcedBaseFov)value=float(forcedBaseFov*(4.0/3.0)/(double(resolutionX)/resolutionY));
@@ -148,6 +150,8 @@ void initialize() {
         resolutionX=readOption(L"ResX",0,ini);resolutionY=readOption(L"ResY",0,ini);
         int proportional=readOption(L"KeepUIAspectRatio",1,ini);
         em4::require(proportional==0 || proportional==1,"KeepUIAspectRatio must be 0 or 1.");
+        windowed=readOption(L"Windowed",0,ini);
+        em4::require(windowed==0 || windowed==1,"Windowed must be 0 or 1.");
         forcedBaseFov=readOption(L"BaseFOV",0,ini);
         em4::require(forcedBaseFov>=0 && forcedBaseFov<=9999,"BaseFOV must be 0..9999.");
         if(!resolutionX && !resolutionY) {
@@ -200,8 +204,8 @@ void initialize() {
         transaction.apply();installed=transaction.done();active=true;
         // Handles late initialization and constructor defaults; future assignments
         // are enforced by the typed setter hooks, without scaling a value twice.
-        for(auto object:{layout.widthObject,layout.heightObject,layout.fovObject})enforce(reinterpret_cast<void*>(object));
-        char summary[256];std::snprintf(summary,sizeof summary,"Applied: %dx%d; proportional menu/HUD=%d; FOV source=%s; 5 CVar hooks.",resolutionX,resolutionY,proportional,forcedBaseFov?"INI BaseFOV":"game configuration");log(summary);
+        for(auto object:{layout.widthObject,layout.heightObject,layout.fovObject,layout.fullscreenObject})enforce(reinterpret_cast<void*>(object));
+        char summary[256];std::snprintf(summary,sizeof summary,"Applied: %dx%d; windowed=%d; proportional menu/HUD=%d; FOV source=%s; 5 CVar hooks.",resolutionX,resolutionY,windowed,proportional,forcedBaseFov?"INI BaseFOV":"game configuration");log(summary);
         if(std::abs(layout.previousAspect-4.f/3.f)>0.00001f)log("A previous executable patch was normalized in memory. Restore the previous on-disk patch for a clean migration.");
         log("The plugin does not write the game executable or configuration. Restart the game after editing the INI.");
     } catch(const std::exception& e) {
