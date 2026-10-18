@@ -32,8 +32,7 @@ horizontal field of view while preserving the original vertical field of view.
 4. Launch the game normally.
 
 The required files are `dinput8.dll`, `scripts/Emergency4.WidescreenFix.asi`
-and `scripts/Emergency4.WidescreenFix.ini`. No PowerShell setup, Python or
-compiler is needed for normal ASI use. The bundled x86
+and `scripts/Emergency4.WidescreenFix.ini`. The bundled x86
 [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) loads
 the plugin automatically. The loader's required license notice is preserved in comments at the end of the INI; no separate license file is included in the ZIP.
 
