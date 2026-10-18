@@ -18,6 +18,13 @@
 - **Runtime Patches** — the ASI applies changes in memory without writing the game EXE or CFG.
 - **Diagnostics** — English configuration comments and an initialization log beside the ASI.
 
+## Release contents
+
+The ZIP contains only `dinput8.dll`, `scripts/Emergency4.WidescreenFix.asi`
+and `scripts/Emergency4.WidescreenFix.ini`. Documentation, changelogs and
+validation reports are maintained on GitHub. The required loader notice is
+preserved inside the INI comments.
+
 ## Installation
 
 1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from this release.
@@ -26,8 +33,7 @@
 4. Optionally edit `scripts/Emergency4.WidescreenFix.ini` to set resolution, menu/HUD scaling and FOV.
 5. Launch the game normally. Restart after changing the INI.
 
-The archive includes **x86 Ultimate ASI Loader v9.7.4** (`dinput8.dll`) and its
-license. Preserve an existing loader/mod DLL and follow the README if one is
+The archive includes **x86 Ultimate ASI Loader v9.7.4** (`dinput8.dll`) with its required license notice embedded in the INI comments. Preserve an existing loader/mod DLL and follow the README if one is
 already installed. PowerShell, Python and a compiler are not required for normal ASI use.
 
 ## Uninstallation
@@ -54,3 +60,9 @@ Movies, embedded 3D views and custom mod interfaces may require separate fixes.
 [Source](https://github.com/Simorss/OldGamesFixes/tree/main/Emergency4/asi/src) ·
 [Changelog](https://github.com/Simorss/OldGamesFixes/blob/main/Emergency4/CHANGELOG.md) ·
 [Report an issue](https://github.com/Simorss/OldGamesFixes/issues)
+
+## Development credits
+
+100% of the work on this Emergency 4 fix was done through **GPT-6.1 Sol**.
+
+Ultimate ASI Loader is a separate third-party component by ThirteenAG.

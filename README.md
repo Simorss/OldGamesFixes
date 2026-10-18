@@ -50,3 +50,9 @@ Made with ❤️ for retro gaming preservation
 
 </div>
 
+
+## Development credits
+
+100% of the work on this Emergency 4 fix was done through **GPT-6.1 Sol**.
+
+The bundled Ultimate ASI Loader is a separate third-party component by ThirteenAG.

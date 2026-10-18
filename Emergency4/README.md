@@ -27,7 +27,7 @@ horizontal field of view while preserving the original vertical field of view.
 
 1. Download **Emergency4.WidescreenFix-v2.0.0-beta.2.zip** from
    [Releases](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4).
-2. Close the game. If you used the old script patcher, see **Upgrading from the previous fix** below.
+2. Close the game. If you used the old script patcher, see **Upgrading from earlier patches** below.
 3. Extract the complete archive into the folder containing the **actual game executable**, preserving the `scripts` folder.
 4. Optionally edit `scripts/Emergency4.WidescreenFix.ini`.
 5. Launch the game normally.
@@ -36,12 +36,25 @@ The required files are `dinput8.dll`, `scripts/Emergency4.WidescreenFix.asi`
 and `scripts/Emergency4.WidescreenFix.ini`. No PowerShell setup, Python or
 compiler is needed for normal ASI use. The bundled x86
 [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) loads
-the plugin automatically. Its license is included in the archive.
+the plugin automatically. The loader's required license notice is preserved in comments at the end of the INI; no separate license file is included in the ZIP.
 
 If your installation already contains `dinput8.dll`, preserve it and use a
 compatible existing ASI loader rather than overwriting another mod's DLL.
 This plugin requires a loader that calls `InitializeASI` outside `DllMain`,
 as the included Ultimate ASI Loader does by default.
+
+## Release contents
+
+The public ZIP contains only:
+
+```text
+dinput8.dll
+scripts/Emergency4.WidescreenFix.asi
+scripts/Emergency4.WidescreenFix.ini
+```
+
+Instructions, changelogs, source, validation reports and the standalone loader
+license are available in this GitHub repository.
 
 ## Configuration
 
@@ -110,3 +123,9 @@ Movies, embedded 3D views and custom mod interfaces may require separate work.
 
 [Source](asi/src) · [Changelog](CHANGELOG.md) ·
 [Technical details](docs/TECHNICAL-ASI.md) · [Validation report](docs/validation-asi.json)
+
+## Development credits
+
+100% of the work on this Emergency 4 fix was done through **GPT-6.1 Sol**.
+
+Ultimate ASI Loader is a separate third-party component by ThirteenAG.

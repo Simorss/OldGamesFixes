@@ -83,28 +83,29 @@ if ($report.status -ne 'PASS' -or $report.version -ne $version) { throw 'The pri
 foreach ($property in $report.source_sha256.PSObject.Properties) {
     if ((Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $property.Name) -Algorithm SHA256).Hash -ne $property.Value) { throw "Validation report is stale for $($property.Name)." }
 }
+# Keep the public archive limited to runtime files. The bundled loader's
+# required notice is embedded in INI comments, and checked before packaging.
+$iniPath = Join-Path $PSScriptRoot 'asi/data/scripts/Emergency4.WidescreenFix.ini'
+$licensePath = Join-Path $PSScriptRoot 'asi/third-party/Ultimate-ASI-Loader-LICENSE.txt'
+$notice = ((Get-Content -LiteralPath $licensePath) | ForEach-Object { if ($_ -eq '') { ';' } else { '; '+$_ } }) -join "`n"
+$iniText = [IO.File]::ReadAllText($iniPath).Replace("`r`n","`n")
+if (!$iniText.Contains($notice.TrimEnd())) { throw 'The loader redistribution notice is missing from the INI.' }
 $files = [ordered]@{
     $plugin = 'scripts/Emergency4.WidescreenFix.asi'
     $loader = 'dinput8.dll'
-    (Join-Path $PSScriptRoot 'asi/data/scripts/Emergency4.WidescreenFix.ini') = 'scripts/Emergency4.WidescreenFix.ini'
-    (Join-Path $PSScriptRoot 'README.md') = 'README.md'
-    (Join-Path $PSScriptRoot 'CHANGELOG.md') = 'CHANGELOG.md'
-    (Join-Path $PSScriptRoot 'docs/RELEASE-NOTES.md') = 'docs/RELEASE-NOTES.md'
-    (Join-Path $PSScriptRoot 'docs/TECHNICAL-ASI.md') = 'docs/TECHNICAL-ASI.md'
-    $reportPath = 'docs/validation-asi.json'
-    (Join-Path $PSScriptRoot 'asi/third-party/Ultimate-ASI-Loader-LICENSE.txt') = 'licenses/Ultimate-ASI-Loader-LICENSE.txt'
+    $iniPath = 'scripts/Emergency4.WidescreenFix.ini'
 }
-$manifest = [ordered]@{Version=$version; Architecture='x86'; CompilerFamily=$(if ($msvc) {'Visual C++'} else {'GCC/MinGW'}); LoaderVersion='9.7.4'; LoaderArchiveSha256=$loaderHash; Files=@()}
-foreach ($file in $files.Keys) { $manifest.Files += [ordered]@{Path=$files[$file]; Sha256=(Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant()} }
-$manifestPath = Join-Path $build 'manifest.json'
-[IO.File]::WriteAllText($manifestPath,($manifest | ConvertTo-Json -Depth 5),[Text.UTF8Encoding]::new($false))
-$files[$manifestPath]='manifest.json'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = Join-Path $release "Emergency4.WidescreenFix-v$version.zip"
 if (Test-Path -LiteralPath $zip) { Remove-Item -LiteralPath $zip }
 $archive = [IO.Compression.ZipFile]::Open($zip,[IO.Compression.ZipArchiveMode]::Create)
 try { foreach ($file in $files.Keys) { $null=[IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive,$file,$files[$file],[IO.Compression.CompressionLevel]::Optimal) } }
 finally { $archive.Dispose() }
+$check = [IO.Compression.ZipFile]::OpenRead($zip)
+try {
+    if ($check.Entries.Count -ne 3) { throw 'The public ZIP must contain exactly three runtime files.' }
+    foreach ($name in $files.Values) { if (!$check.GetEntry($name)) { throw "Missing runtime entry: $name" } }
+} finally { $check.Dispose() }
 $hash=(Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
 [IO.File]::WriteAllText((Join-Path $release 'SHA256SUMS.txt'),($hash+'  '+[IO.Path]::GetFileName($zip)+[Environment]::NewLine),[Text.Encoding]::ASCII)
 Write-Output "Release created: $zip"
