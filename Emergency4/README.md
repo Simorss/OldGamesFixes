@@ -21,7 +21,7 @@ horizontal field of view while preserving the original vertical field of view.
 - Preview without writing game files.
 - Original-file backups, repeated setting changes, restore and command-line options.
 
-## Quick start
+## Installation
 
 1. Download the ZIP from [Releases](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4)
    and extract it completely.
