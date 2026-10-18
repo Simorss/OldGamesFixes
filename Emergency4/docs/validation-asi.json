@@ -1,0 +1,366 @@
+{
+  "version": "2.0.0-beta.1",
+  "status": "PASS",
+  "source_sha256": {
+    "asi/src/Engine.hpp": "6267844881472bf2044d5320469ee1c1ea6439c0b2566daaa9a1ac873d517b0a",
+    "asi/src/Plugin.cpp": "893ca98548b63910993d222f597c43cb7e745695dc71d70e13e8deb88e53dc8a",
+    "asi/src/Exports.def": "65170accdf057eb8a1b14ccddf5ab9b60b9af3e4360ddbfad1f29e1f16fe4601",
+    "asi/tests/RuntimeTest.cpp": "30b3486fe9b64e93582679f339c208e5a53ad4d498d1355c8549744078631fb3",
+    "asi/tests/EngineProbe.cpp": "7bbae338c948960ddb39bd9469de5edb1181b2948a660b8dd424ae1bafaa7489"
+  },
+  "checks": [
+    "24 resolution/UI combinations and 120 actual x86 GUI hit tests passed",
+    "Native initialization, five x86 detours/gateways, return/stack preservation, unrelated CVars, stable repeated assignments and one-time initialization passed",
+    "Automatic desktop resolution initialized successfully",
+    "Disabled plugin and invalid INI settings left all mapped game bytes unchanged",
+    "Missing and ambiguous engine signatures rejected before applying patches",
+    "Recognized legacy executable normalized in memory; previous-aspect FOV recovery verified",
+    "Ultimate ASI Loader loaded the actual release plugin through dinput8.dll; an unrelated host was safely rejected",
+    "Release plugin is x86, exports InitializeASI and has no external GCC runtime DLL dependency",
+    "Private source executable unchanged"
+  ],
+  "cases": [
+    {
+      "resolution": "640x480",
+      "mode": "Original",
+      "gui_scale": [
+        0.625,
+        0.625
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "640x480",
+      "mode": "Stretched",
+      "gui_scale": [
+        0.625,
+        0.625
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1024x768",
+      "mode": "Original",
+      "gui_scale": [
+        1.0,
+        1.0
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1024x768",
+      "mode": "Stretched",
+      "gui_scale": [
+        1.0,
+        1.0
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1280x1024",
+      "mode": "Original",
+      "gui_scale": [
+        1.25,
+        1.25
+      ],
+      "gui_origin_px": [
+        0.0,
+        32.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1280x1024",
+      "mode": "Stretched",
+      "gui_scale": [
+        1.25,
+        1.3333333333333333
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1280x720",
+      "mode": "Original",
+      "gui_scale": [
+        0.9375,
+        0.9375
+      ],
+      "gui_origin_px": [
+        160.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1280x720",
+      "mode": "Stretched",
+      "gui_scale": [
+        1.25,
+        0.9375
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1920x1080",
+      "mode": "Original",
+      "gui_scale": [
+        1.40625,
+        1.40625
+      ],
+      "gui_origin_px": [
+        240.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1920x1080",
+      "mode": "Stretched",
+      "gui_scale": [
+        1.875,
+        1.40625
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "2560x1440",
+      "mode": "Original",
+      "gui_scale": [
+        1.875,
+        1.875
+      ],
+      "gui_origin_px": [
+        320.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "2560x1440",
+      "mode": "Stretched",
+      "gui_scale": [
+        2.5,
+        1.875
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3440x1440",
+      "mode": "Original",
+      "gui_scale": [
+        1.875,
+        1.875
+      ],
+      "gui_origin_px": [
+        760.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3440x1440",
+      "mode": "Stretched",
+      "gui_scale": [
+        3.359375,
+        1.875
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3840x1600",
+      "mode": "Original",
+      "gui_scale": [
+        2.0833333333333335,
+        2.0833333333333335
+      ],
+      "gui_origin_px": [
+        853.3333333333333,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3840x1600",
+      "mode": "Stretched",
+      "gui_scale": [
+        3.75,
+        2.0833333333333335
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "5120x1440",
+      "mode": "Original",
+      "gui_scale": [
+        1.875,
+        1.875
+      ],
+      "gui_origin_px": [
+        1600.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "5120x1440",
+      "mode": "Stretched",
+      "gui_scale": [
+        5.0,
+        1.875
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3840x2160",
+      "mode": "Original",
+      "gui_scale": [
+        2.8125,
+        2.8125
+      ],
+      "gui_origin_px": [
+        480.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3840x2160",
+      "mode": "Stretched",
+      "gui_scale": [
+        3.75,
+        2.8125
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3840x1080",
+      "mode": "Original",
+      "gui_scale": [
+        1.40625,
+        1.40625
+      ],
+      "gui_origin_px": [
+        1200.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "3840x1080",
+      "mode": "Stretched",
+      "gui_scale": [
+        3.75,
+        1.40625
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1080x1920",
+      "mode": "Original",
+      "gui_scale": [
+        1.0546875,
+        1.0546875
+      ],
+      "gui_origin_px": [
+        0.0,
+        555.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    },
+    {
+      "resolution": "1080x1920",
+      "mode": "Stretched",
+      "gui_scale": [
+        1.0546875,
+        2.5
+      ],
+      "gui_origin_px": [
+        0.0,
+        0.0
+      ],
+      "click_tests": 5,
+      "status": "PASS"
+    }
+  ],
+  "plugin_imports": [
+    "KERNEL32.dll",
+    "msvcrt.dll",
+    "USER32.dll"
+  ],
+  "limitations": "One actual executable, synthetic rebased fixtures and synthetic original-setter continuations. No real game launch or graphical validation; other regional builds, engine startup timing, custom mod UI and complete renderer behavior need in-game testing."
+}

@@ -4,3 +4,8 @@
 *.json text eol=lf
 *.py text eol=lf
 *.cs text eol=crlf
+
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.def text eol=lf
+*.ini text eol=crlf

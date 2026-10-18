@@ -1,5 +1,6 @@
-# Release output
+# Release packages
 
-Run `../build-release.ps1` to create the English-only ZIP and `SHA256SUMS.txt`.
-These generated assets belong in GitHub Releases, not in the source history.
-No executable, DLL, game asset or personal configuration is included.
+Run `../build-asi-release.ps1` to compile, test and package the ASI release.
+Generated ZIP archives, checksums, binaries and build output are not committed.
+Download the current package from the fixed `emergency4` release page.
+`../build-release.ps1` is retained only for the historical script patcher.

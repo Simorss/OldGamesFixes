@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0-beta.1
+
+- Replace the interactive installation workflow with a native x86 ASI and commented English INI.
+- Bundle the pinned, checksum-verified Ultimate ASI Loader v9.7.4 with its license.
+- Apply camera, menu/HUD, mouse and clipping corrections in process memory.
+- Override resolution through five verified typed CVar setters; preserve unrelated variables.
+- Preserve configured FOV with automatic aspect correction and an optional explicit BaseFOV.
+- Detect the desktop resolution or accept custom width/height from the INI.
+- Normalize recognized earlier project patches in memory and include an optional legacy restoration tool.
+- Add native detour/gateway tests, real-loader integration, invalid-input checks and x86 GUI emulation.
+- Keep this release in beta pending in-game visual and additional real-build validation.
+
 ## 1.1.0-beta.1
 
 - Translate all prompts, errors, command scripts and current documentation into English.

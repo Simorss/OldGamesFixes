@@ -17,3 +17,14 @@
 **/*-Backup/
 **/Data/
 **/Mods/
+
+# Native ASI build products.
+*.asi
+*.obj
+*.o
+*.pdb
+*.ilk
+*.lib
+*.exp
+*.a
+*.log

@@ -22,7 +22,7 @@ As a bonus, this repo also includes a few **Italian localization/translation pat
 
 | Game README | Fix Type | Download |
 |------|----------|--------|
-| [Emergency 4 / Deluxe / 911: First Responders](./Emergency4/README.md) | Signature-based resolution, FOV and menu/HUD scaling | [🧪 1.1.0-beta.1 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4) |
+| [Emergency 4 / Deluxe / 911: First Responders](./Emergency4/README.md) | ASI resolution, FOV and menu/HUD scaling | [🧪 2.0.0-beta.1 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4) |
 
 ---
 

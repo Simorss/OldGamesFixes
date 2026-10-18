@@ -1,4 +1,4 @@
-**Version 1.1.0-beta.1 · Windows · Beta**
+**Version 2.0.0-beta.1 · Windows · ASI · Beta**
 
 ## Fixes
 
@@ -10,28 +10,30 @@
 
 ## Options and Tools
 
-- **Resolution Selection** — enter width and height in the English interactive setup.
-- **Interface Mode** — select `Original` for proportional scaling or `Stretched` for full-screen scaling.
-- **Automatic Detection** — discover the game executable and configuration by their contents; select a file if multiple candidates are found.
-- **Preview** — inspect the proposed settings without changing game files.
-- **Backup and Restore** — preserve the original executable and configuration, reapply settings and restore the pre-installation files.
-- **Command Line** — apply settings or restore the game without interactive prompts.
+- **Resolution** — automatic desktop detection or explicit `ResX` / `ResY` in the INI.
+- **Interface Mode** — `KeepUIAspectRatio=1` keeps original menu/HUD proportions; `0` stretches the interface across the screen.
+- **FOV** — automatic correction of the game's configured focal parameter; optional `BaseFOV` override.
+- **Runtime Patches** — the ASI applies changes in memory without writing the game EXE or CFG.
+- **Diagnostics** — English configuration comments and an initialization log beside the ASI.
 
 ## Installation
 
-1. Download **Emergency4-ResolutionFix-v1.1.0-beta.1.zip** from this release.
-2. Extract the complete archive into a folder. Keep `Emergency4-Fix.cmd`, `Emergency4-Fix.ps1` and `EnginePatch.cs` together.
-3. Close the game and run **Emergency4-Fix.cmd**.
-4. Select **Apply**, choose the game folder, enter the resolution and choose the menu/HUD mode.
-5. Launch the game normally. Run the setup again to change these settings.
+1. Download **Emergency4.WidescreenFix-v2.0.0-beta.1.zip** from this release.
+2. Close the game. For an upgrade from the script patcher, first use the included `tools/Restore-LegacyFix.cmd` as described in the README.
+3. Extract the archive into the folder containing the actual game executable, preserving the `scripts` folder.
+4. Optionally edit `scripts/Emergency4.WidescreenFix.ini` to set resolution, menu/HUD scaling and FOV.
+5. Launch the game normally. Restart after changing the INI.
 
-**Requirements:** Windows PowerShell 5.1 or PowerShell 7, and write access to the game folder. Python is not required.
+The archive includes **x86 Ultimate ASI Loader v9.7.4** (`dinput8.dll`) and its
+license. Preserve an existing loader/mod DLL and follow the README if one is
+already installed. PowerShell is only used by the optional legacy restore tool.
+Python and a compiler are not required for normal ASI use.
 
 ## Uninstallation
 
-Run **Emergency4-Fix.cmd**, select **Restore** and choose the same game folder.
-Keep `OldGamesFixes-Emergency4-Backup` until restoration is complete. Deleting
-the setup files alone does not undo the installed corrections.
+Close the game and remove this plugin's ASI and INI from `scripts`.
+Remove `dinput8.dll` only if other mods do not use it. Earlier on-disk patches
+remain until separately restored; the ASI itself does not write the EXE or CFG.
 
 ## Compatibility
 
@@ -42,12 +44,12 @@ unrecognized or ambiguous instructions are left unchanged.
 
 This is a **beta**. One actual executable and additional synthetic variants
 were tested; support for every regional, retail, digital or protected build is
-not established. Generalized UI appearance needs further in-game validation.
+not established. Full engine startup and visual appearance need further in-game validation.
 Movies, embedded 3D views and custom mod interfaces may require separate fixes.
 
 ## Links
 
 [Instructions and configuration](https://github.com/Simorss/OldGamesFixes/blob/main/Emergency4/README.md) ·
-[Source](https://github.com/Simorss/OldGamesFixes/tree/main/Emergency4/src) ·
+[Source](https://github.com/Simorss/OldGamesFixes/tree/main/Emergency4/asi/src) ·
 [Changelog](https://github.com/Simorss/OldGamesFixes/blob/main/Emergency4/CHANGELOG.md) ·
 [Report an issue](https://github.com/Simorss/OldGamesFixes/issues)
