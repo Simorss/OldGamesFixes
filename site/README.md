@@ -8,13 +8,14 @@ external fonts. All interface text is in English.
 
 - `index.html`: project cards, features, release versions and download links.
 - `assets/style.css`: responsive layout and visual design.
-- `assets/app.js`: category filters, search and the screenshot comparison.
+- `assets/app.js`: game search, bonus download menus and the screenshot comparison.
 - `favicon.svg`: site icon.
 
 Projects are grouped by game using a `section.game-group[data-game]` wrapper.
 Keep fixes and bonus tools for the same game in that section. When adding a game,
-add its game filter, heading and project cards, and update the totals and searchable
-keywords. Search hides empty game groups and updates their visible project count.
+add its game section and update the game total and searchable keywords.
+Keep bonus tools in the game card, linked from its BONUS Downloads menu.
+Search hides empty game groups. Use original screenshots in `assets/`.
 Download links are deliberately pinned to the
 project's own release tag and asset; this keeps bonus tools separate from fixes.
 
