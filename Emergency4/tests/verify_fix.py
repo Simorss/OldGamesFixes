@@ -22,7 +22,6 @@ from unicorn.x86_const import (
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / 'src' / 'Emergency4-Fix.ps1'
-CANONICAL = '17924F0E847FB0173DDBD5FDB5D5CBBF68F75CF1DB6FDCADB155F964A350FDC9'
 RESOLUTIONS = [(640,480),(1024,768),(1280,1024),(1280,720),(1920,1080),
                (2560,1440),(3440,1440),(3840,1600),(5120,1440),
                (3840,2160),(3840,1080),(1080,1920)]
@@ -81,7 +80,7 @@ def emulate(exe, w, h, mode):
     root, dialog, button, merged = 0x20000000, 0x20001000, 0x20002000, 0x20003000
     for obj in [root, dialog, button]:
         call(0x938630, obj+0x30)
-    root_target = 0x934477+5+struct.unpack_from('<i', exe, 0x534478)[0]
+    root_target = 0x934477+5+struct.unpack_from('<i', exe, pe.get_offset_from_rva(0x534478))[0]
     call(root_target, root, 0., 0.)
     # Use the real root vtable and SetRect callback, as in the GUI constructor.
     u.mem_write(root, word(0xa30e20))
@@ -113,7 +112,7 @@ def emulate(exe, w, h, mode):
         vy = call(0x938450, 0, float(py), fpu=True)
         hit = bool(call(0x9389a0, merged, float(vx), float(vy)) & 0xff)
         assert hit == expected, (w, h, mode, px, py, vx, vy, hit)
-    assert abs(struct.unpack_from('<f', exe, 0x78917)[0]-w/h) < 1e-6
+    assert abs(struct.unpack_from('<f', exe, pe.get_offset_from_rva(0x78917))[0]-w/h) < 1e-6
     return {'resolution': f'{w}x{h}', 'mode': mode, 'gui_scale': [sx,sy],
             'gui_origin_px': [origin_x,origin_y], 'click_tests': 5, 'status': 'PASS'}
 
@@ -129,15 +128,15 @@ def main():
     ap.add_argument('--shell', default='powershell.exe')
     a = ap.parse_args()
     original, cfg = a.original_exe.read_bytes(), a.original_config.read_bytes()
-    assert sha(original) == CANONICAL
+    assert original[:2] == b'MZ'
     # New dedicated fixture directory only. Never overwrite or remove existing fixtures.
     a.work_dir.mkdir(parents=True, exist_ok=False)
 
-    def fixture(name, data=original, configuration=cfg):
+    def fixture(name, data=original, configuration=cfg, exe_name='Em4Deluxe.exe', cfg_name='em4deluxe.cfg'):
         path = a.work_dir / name
         path.mkdir()
-        (path/'Em4Deluxe.exe').write_bytes(data)
-        (path/'em4deluxe.cfg').write_bytes(configuration)
+        (path/exe_name).write_bytes(data)
+        (path/cfg_name).write_bytes(configuration)
         return path
 
     def run(path, *extra, success=True):
@@ -175,7 +174,7 @@ def main():
     assert (preview/'Em4Deluxe.exe').read_bytes() == original
 
     # Unsupported/corrupted builds and invalid dimensions leave input untouched.
-    bad = bytearray(original); bad[0x10000] ^= 1
+    bad = bytearray(original); bad[0x78911] = 0x90 # Remove a required camera signature.
     rejected = fixture('unsupported',bytes(bad))
     run(rejected,'-Width',1920,'-Height',1080,'-InterfaceMode','Original',success=False)
     assert (rejected/'Em4Deluxe.exe').read_bytes() == bad
@@ -196,7 +195,7 @@ def main():
     checks = ['24 resolution/mode combinations','120 geometric hit tests',
               'resolution and mode changes without cumulative FOV',
               'exact executable/config restoration','preview without writes',
-              'unknown executable rejection','invalid dimension rejection',
+              'missing engine signature rejection','invalid dimension rejection',
               'UTF-16 LE/BE, UTF-8 BOM and ANSI configs']
     # Exercise the actual interactive path with all answers supplied through stdin.
     interactive = fixture('interactive path with spaces')
@@ -207,7 +206,7 @@ def main():
     interactive_cfg = config_values((interactive/'em4deluxe.cfg').read_bytes())
     assert interactive_cfg['r_xres'] == '1920' and interactive_cfg['r_yres'] == '1080'
     assert 'menu/HUD: Original' in proc.stdout
-    checks += ['interactive action, game-path, resolution and UI prompts via stdin']
+    checks += ['English interactive action, game-path, resolution and UI prompts via stdin']
     if shutil.which('pwsh.exe'):
         smoke = fixture('PowerShell 7 smoke')
         args7 = ['pwsh.exe','-NoProfile','-File',str(SCRIPT),'-GamePath',str(smoke),'-NonInteractive']
@@ -232,10 +231,81 @@ def main():
         assert (path/'Em4Deluxe.exe').read_bytes() == old_exe
         assert (path/'em4deluxe.cfg').read_bytes() == old_cfg
         checks += ['legacy fixed-3440 migration','idempotent application','exact legacy restore']
-    result = {'version':'1.0.0-beta.1','status':'PASS','shell':a.shell,
+
+    # Executable/configuration names and unrelated localized/resource content are not admission criteria.
+    for idx, (exe_name, cfg_name) in enumerate([
+        ('em4.exe','em4.cfg'), ('911_First_Responders.exe','em4.cfg'),
+        ('Emergency4_English.exe','settings.cfg')]):
+        variant = bytearray(original)
+        # Change a non-code resource byte and append a translation-like marker.
+        resource = pefile.PE(data=original).sections[-1]
+        variant[resource.PointerToRawData+resource.SizeOfRawData-1] ^= 1
+        variant += b'LANGUAGE-INDEPENDENT-SYNTHETIC-FIXTURE-' + str(idx).encode()
+        path = fixture('renamed build '+str(idx), bytes(variant), exe_name=exe_name, cfg_name=cfg_name)
+        run(path,'-Width',1920,'-Height',1080,'-InterfaceMode','Original')
+        emulate((path/exe_name).read_bytes(),1920,1080,'Original')
+        run(path,'-Restore')
+        assert (path/exe_name).read_bytes() == variant
+        assert (path/cfg_name).read_bytes() == cfg
+    checks += ['renamed em4.exe, 911_First_Responders.exe and arbitrary game/config names',
+               'changed resource bytes and trailing data accepted without a whole-file hash allowlist']
+
+    # File offsets may differ from RVAs: insert an aligned page before every section.
+    pe = pefile.PE(data=original)
+    first = min(x.PointerToRawData for x in pe.sections)
+    gap = max(0x1000, pe.OPTIONAL_HEADER.FileAlignment)
+    repacked = bytearray(original[:first] + bytes(gap) + original[first:])
+    for section in pe.sections:
+        if section.SizeOfRawData:
+            struct.pack_into('<I',repacked,section.get_file_offset()+20,section.PointerToRawData+gap)
+    path=fixture('repacked raw sections',bytes(repacked),exe_name='em4.exe',cfg_name='em4.cfg')
+    preview=run(path,'-Width',3440,'-Height',1440,'-InterfaceMode','Original','-Preview')
+    assert json.loads(preview.stdout)['GameplayAspectOffset'] == 0x78917+gap
+    run(path,'-Width',3440,'-Height',1440,'-InterfaceMode','Original')
+    emulate((path/'em4.exe').read_bytes(),3440,1440,'Original')
+    run(path,'-Restore')
+    assert (path/'em4.exe').read_bytes() == repacked
+    checks += ['PE sections repacked to different raw file offsets; real GUI emulation still passes']
+
+    # Rebase absolute x86 memory/immediate operands for a scanner-only address-variation test.
+    # This synthetic fixture is not represented as a complete, runnable regional release.
+    from capstone import Cs, CS_ARCH_X86, CS_MODE_32, CS_GRP_JUMP, CS_GRP_CALL
+    from capstone.x86_const import X86_OP_MEM, X86_OP_IMM
+    pe=pefile.PE(data=original); base=pe.OPTIONAL_HEADER.ImageBase; delta=0x1000000
+    rebased=bytearray(original)
+    struct.pack_into('<I',rebased,pe.OPTIONAL_HEADER.get_field_absolute_offset('ImageBase'),base+delta)
+    md=Cs(CS_ARCH_X86,CS_MODE_32); md.detail=True; md.skipdata=True
+    for section in pe.sections:
+        if not section.Characteristics & 0x20000000: continue
+        code=original[section.PointerToRawData:section.PointerToRawData+section.SizeOfRawData]
+        for ins in md.disasm(code,base+section.VirtualAddress):
+            if ins.id==0:continue
+            at=section.PointerToRawData+ins.address-(base+section.VirtualAddress)
+            for op in ins.operands:
+                if op.type==X86_OP_MEM and not op.mem.base and not op.mem.index and base<=op.mem.disp<base+pe.OPTIONAL_HEADER.SizeOfImage and ins.disp_size==4:
+                    struct.pack_into('<I',rebased,at+ins.disp_offset,op.mem.disp+delta)
+                elif op.type==X86_OP_IMM and not ins.group(CS_GRP_JUMP) and not ins.group(CS_GRP_CALL) and base<=op.imm<base+pe.OPTIONAL_HEADER.SizeOfImage and ins.imm_size==4:
+                    struct.pack_into('<I',rebased,at+ins.imm_offset,op.imm+delta)
+    path=fixture('rebased scanner profile',bytes(rebased),exe_name='rebased.exe',cfg_name='em4.cfg')
+    preview=run(path,'-Width',2560,'-Height',1440,'-InterfaceMode','Original','-Preview')
+    assert json.loads(preview.stdout)['ImageBase']==base+delta
+    checks += ['rebased x86 absolute pointers detected without fixed virtual addresses (scanner-only synthetic test)']
+
+    # A second matching root constructor must be rejected as ambiguous.
+    pe=pefile.PE(data=original)
+    text=next(x for x in pe.sections if x.Characteristics & 0x20000000)
+    blank=original.find(bytes(64),text.PointerToRawData,text.PointerToRawData+text.SizeOfRawData)
+    assert blank>=0
+    ambiguous=bytearray(original); ambiguous[blank:blank+46]=original[0x534460:0x534460+46]
+    path=fixture('ambiguous engine signature',bytes(ambiguous))
+    run(path,'-Width',1920,'-Height',1080,'-InterfaceMode','Original',success=False)
+    assert (path/'Em4Deluxe.exe').read_bytes()==ambiguous
+    checks += ['ambiguous engine anchors rejected without writing files']
+
+    result = {'version':'1.1.0-beta.1','status':'PASS','shell':a.shell,
               'method':'Private fixtures + actual x86 GUI methods executed in Unicorn; no game launch or UI automation',
               'checks':checks,'cases':results,
-              'limitations':'Visual in-game validation is pending for the generalized menu/HUD patch and resolutions other than 3440x1440.'}
+              'limitations':'One actual game binary was available. Renamed, non-code-modified, raw-section-repacked and rebased inputs are synthetic coverage, not independently acquired regional releases. Other executable layouts and in-game visuals require independent testing.'}
     a.report.parent.mkdir(parents=True,exist_ok=True)
     a.report.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'status':'PASS','cases':len(results),'checks':checks},indent=2))

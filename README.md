@@ -22,7 +22,7 @@ As a bonus, this repo also includes a few **Italian localization/translation pat
 
 | Game | Fix Type | Status |
 |------|----------|--------|
-| [Emergency 4 Deluxe / Edizione Oro](./Emergency4/README.md) | Custom resolution, gameplay FOV and menu/HUD aspect ratio | 🧪 1.0.0-beta.1 |
+| [Emergency 4 / Deluxe / 911: First Responders](./Emergency4/README.md) | Signature-based resolution, FOV and menu/HUD scaling | 🧪 1.1.0-beta.1 |
 
 ---
 

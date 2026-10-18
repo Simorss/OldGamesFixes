@@ -40,6 +40,7 @@ jobs:
           }
           $report = Get-Content Emergency4/docs/validation.json -Raw | ConvertFrom-Json
           if ($report.status -ne 'PASS') { throw 'The local validation report is not passing.' }
+          Add-Type -Path ./Emergency4/src/EnginePatch.cs
           & ./Emergency4/build-release.ps1
           if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { throw 'Release build failed.' }
 
@@ -61,16 +62,25 @@ jobs:
           if ((Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash -ne $expected) { throw 'ZIP checksum mismatch.' }
           gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
           if ($LASTEXITCODE -eq 0) {
-            gh release edit $tag --repo $env:GITHUB_REPOSITORY --notes-file 'Emergency4/docs/RELEASE-NOTES.en.md'
+            gh release edit $tag --repo $env:GITHUB_REPOSITORY --notes-file 'Emergency4/docs/RELEASE-NOTES.md'
             if ($LASTEXITCODE -ne 0) { throw 'Release description update failed.' }
             Write-Host "Updated release $tag description."
-            exit 0
-          }
+          } else {
           $arguments = @('release','create',$tag,$zip,$sums,'--repo',$env:GITHUB_REPOSITORY,
             '--target',$env:GITHUB_SHA,'--title',"Emergency 4 Resolution & Aspect Ratio Fix $version",
-            '--notes-file','Emergency4/docs/RELEASE-NOTES.en.md')
+            '--notes-file','Emergency4/docs/RELEASE-NOTES.md')
           if ($version.Contains('-')) { $arguments += @('--prerelease','--latest=false') }
           & gh @arguments
           if ($LASTEXITCODE -ne 0) { throw 'GitHub release publication failed.' }
+          }
           gh release view $tag --repo $env:GITHUB_REPOSITORY --json url,tagName,isPrerelease,assets
           if ($LASTEXITCODE -ne 0) { throw 'Release verification failed.' }
+          # Withdraw the earlier package containing non-English scripts/docs without deleting its history.
+          $legacyTag = 'emergency4-v1.0.0-beta.1'
+          gh release view $legacyTag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release edit $legacyTag --repo $env:GITHUB_REPOSITORY --draft --latest=false --notes-file Emergency4/docs/LEGACY-RELEASE.md
+            if ($LASTEXITCODE -ne 0) { throw 'Could not withdraw the superseded non-English package.' }
+          }
+          Write-Host 'Release publication completed.'
+          $global:LASTEXITCODE = 0

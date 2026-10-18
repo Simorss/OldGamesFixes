@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta.1",
+  "version": "1.1.0-beta.1",
   "status": "PASS",
   "shell": "powershell.exe",
   "method": "Private fixtures + actual x86 GUI methods executed in Unicorn; no game launch or UI automation",
@@ -9,14 +9,20 @@
     "resolution and mode changes without cumulative FOV",
     "exact executable/config restoration",
     "preview without writes",
-    "unknown executable rejection",
+    "missing engine signature rejection",
     "invalid dimension rejection",
     "UTF-16 LE/BE, UTF-8 BOM and ANSI configs",
-    "interactive action, game-path, resolution and UI prompts via stdin",
+    "English interactive action, game-path, resolution and UI prompts via stdin",
     "PowerShell 7 portrait apply/restore smoke test",
     "legacy fixed-3440 migration",
     "idempotent application",
-    "exact legacy restore"
+    "exact legacy restore",
+    "renamed em4.exe, 911_First_Responders.exe and arbitrary game/config names",
+    "changed resource bytes and trailing data accepted without a whole-file hash allowlist",
+    "PE sections repacked to different raw file offsets; real GUI emulation still passes",
+    "rebased x86 absolute pointers detected without fixed virtual addresses (scanner-only synthetic test)",
+    "ambiguous engine anchors rejected without writing files",
+    "version 1.0 backup state upgraded to schema 2; original snapshots and exact restore preserved"
   ],
   "cases": [
     {
@@ -356,5 +362,5 @@
       "status": "PASS"
     }
   ],
-  "limitations": "Visual in-game validation is pending for the generalized menu/HUD patch and resolutions other than 3440x1440."
+  "limitations": "One actual game binary was available. Renamed, non-code-modified, raw-section-repacked and rebased inputs are synthetic coverage, not independently acquired regional releases. Other executable layouts and in-game visuals require independent testing."
 }

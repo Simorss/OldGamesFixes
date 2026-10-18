@@ -1,5 +1,5 @@
-# Local release output
+# Release output
 
-Run `../build-release.ps1` to generate the release ZIP and `SHA256SUMS.txt` here.
-Upload these generated files as assets of a **GitHub Release**, not as game
-binaries in the source tree. Generated archives are excluded by `.gitignore`.
+Run `../build-release.ps1` to create the English-only ZIP and `SHA256SUMS.txt`.
+These generated assets belong in GitHub Releases, not in the source history.
+No executable, DLL, game asset or personal configuration is included.
