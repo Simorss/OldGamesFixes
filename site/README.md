@@ -8,7 +8,7 @@ external fonts. All interface text is in English.
 
 - `index.html`: project cards, features, release versions and download links.
 - `assets/style.css`: responsive layout and visual design.
-- `assets/app.js`: game search, bonus download menus and the screenshot comparison.
+- `assets/app.js`: game search, bonus download menus and independent screenshot comparisons for each game.
 - `favicon.svg`: site icon.
 
 Projects are grouped by game using a `section.game-group[data-game]` wrapper.
@@ -29,7 +29,9 @@ The game release packages are built separately and do not include website files.
 
 To preview locally, serve the deployment directory with any static HTTP server.
 The workflow assembles that directory from `site/`,
-`Emergency4/comparison/index.html` and `Emergency4/screenshots/*`.
+`Emergency4/comparison/index.html`, `Emergency4/screenshots/*`,
+`TheRegiment/comparison/index.html` and `TheRegiment/screenshots/*`.
+The Regiment is available at `/theregiment/`, with images under `/screenshots/theregiment/`.
 
 100% of the work on this website was done through **GPT-6.1 Sol**.
 The page structure takes inspiration from the project catalogue at

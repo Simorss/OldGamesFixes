@@ -23,6 +23,7 @@ As a bonus, this repo also includes a few **Italian localization/translation pat
 | Game README | Fix Type | Download |
 |------|----------|--------|
 | [Emergency 4 / Deluxe / 911: First Responders](./Emergency4/README.md) | ASI resolution, FOV and menu/HUD scaling | [1.0 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4) |
+| [The Regiment](./TheRegiment/README.md) | ASI Hor+ FOV, viewmodel and mouse filter fix | [✅ 1.0 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/theregiment) |
 | [Emergency 4 Simple Mod Launcher](./Emergency4/SimpleModLauncher/README.md) | Bonus: numbered mod selection and direct launch | [1.0 — Download](https://github.com/Simorss/OldGamesFixes/releases/tag/emergency4-smd) |
 
 ---
@@ -55,5 +56,7 @@ Made with ❤️ for retro gaming preservation
 ## Development credits
 
 100% of the work on this Emergency 4 fix was done through **GPT-6.1 Sol**.
+
+The Regiment fix was developed with Codex.
 
 The bundled Ultimate ASI Loader is a separate third-party component by ThirteenAG.

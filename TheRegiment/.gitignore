@@ -1,0 +1,15 @@
+/work/
+/build/
+*.log
+*.obj
+*.o
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.exe
+*.u
+*.ut2
+*.unr
+*.dll
+!/third-party/Ultimate-ASI-Loader/dinput8.dll

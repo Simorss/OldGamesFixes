@@ -1,0 +1,71 @@
+name: The Regiment release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'TheRegiment/src/**'
+      - 'TheRegiment/config/**'
+      - 'TheRegiment/tests/**'
+      - 'TheRegiment/tools/**'
+      - 'TheRegiment/third-party/**'
+      - 'TheRegiment/VERSION'
+      - 'TheRegiment/docs/RELEASE-NOTES.md'
+      - '.github/workflows/theregiment-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: theregiment-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build and validate the four-file package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $ProgressPreference = 'SilentlyContinue'
+          $tools = Join-Path $env:RUNNER_TEMP 'theregiment-toolchain'
+          New-Item -ItemType Directory -Force -Path $tools | Out-Null
+          $archive = Join-Path $tools 'w64devkit-x86.7z.exe'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/skeeto/w64devkit/releases/download/v2.10.1/w64devkit-x86-2.10.1.7z.exe' -OutFile $archive
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne '8821e6e4aa42d7eb42bf0cbabd18c4175fb0422bf96f4a178e1530b4ca69c73f') { throw 'Compiler archive checksum mismatch.' }
+          & 7z x $archive "-o$tools" -y -bso0 -bsp0
+          if ($LASTEXITCODE -ne 0) { throw 'Compiler extraction failed.' }
+          # The complete D3D9 suite is validated locally; hosted CI has no game GPU.
+          & ./TheRegiment/tools/Build.ps1 -Compiler (Join-Path $tools 'w64devkit/bin/g++.exe') -SkipGraphicsTests
+          if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { throw 'Build or tests failed.' }
+      - name: Publish release notes, ZIP and SHA-256
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = (Get-Content TheRegiment/VERSION -Raw).Trim()
+          $tag = 'theregiment'
+          $zip = "TheRegiment/release/TheRegiment.FOVFix-v$version.zip"
+          $sums = 'TheRegiment/release/SHA256SUMS.txt'
+          $expected = ((Get-Content $sums -Raw).Trim() -split '\s+')[0]
+          if ((Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash -ne $expected) { throw 'ZIP checksum mismatch.' }
+          $title = "The Regiment FOV Fix ASI $version"
+          gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release edit $tag --repo $env:GITHUB_REPOSITORY --title $title --notes-file TheRegiment/docs/RELEASE-NOTES.md --draft=false --prerelease=false --latest=true
+            if ($LASTEXITCODE -ne 0) { throw 'Release description update failed.' }
+            gh release upload $tag $zip $sums --repo $env:GITHUB_REPOSITORY --clobber
+          } else {
+            gh release create $tag $zip $sums --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title $title --notes-file TheRegiment/docs/RELEASE-NOTES.md --latest=true
+          }
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed.' }
+          gh release view $tag --repo $env:GITHUB_REPOSITORY --json url,tagName,isPrerelease,assets
+          if ($LASTEXITCODE -ne 0) { throw 'Release verification failed.' }

@@ -1,0 +1,12 @@
+{
+  "with-fix.png": {
+    "width": 3440,
+    "height": 1440,
+    "sha256": "fd13a11d42fa1a2c7538e7fa821092f60f4bb9d200e6ff212a6db3a1ea51ef20"
+  },
+  "without-fix.png": {
+    "width": 3440,
+    "height": 1440,
+    "sha256": "748ee2a1975635e47a1d2aaeca62926ae0ea64260370166e22fbb59d89aa278a"
+  }
+}

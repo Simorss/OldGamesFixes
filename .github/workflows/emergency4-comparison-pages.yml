@@ -7,6 +7,8 @@ on:
       - 'site/**'
       - 'Emergency4/comparison/**'
       - 'Emergency4/screenshots/**'
+      - 'TheRegiment/comparison/**'
+      - 'TheRegiment/screenshots/**'
       - '.github/workflows/emergency4-comparison-pages.yml'
   workflow_dispatch:
 
@@ -31,10 +33,12 @@ jobs:
           persist-credentials: false
       - name: Prepare website and comparison
         run: |
-          mkdir -p _site/emergency4 _site/screenshots
+          mkdir -p _site/emergency4 _site/screenshots _site/theregiment _site/screenshots/theregiment
           cp -R site/. _site/
           cp Emergency4/comparison/index.html _site/emergency4/index.html
           cp Emergency4/screenshots/* _site/screenshots/
+          cp TheRegiment/comparison/index.html _site/theregiment/index.html
+          cp TheRegiment/screenshots/* _site/screenshots/theregiment/
           touch _site/.nojekyll
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

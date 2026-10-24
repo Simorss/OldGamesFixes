@@ -30,35 +30,41 @@ document.addEventListener('keydown', event => {
 });
 // A deep link to a project should reveal it even after filtering the collection.
 function revealAnchor() {
-  if (['#game-emergency4', '#emergency4', '#mod-launcher'].includes(location.hash)) {
+  if (document.getElementById(location.hash.slice(1))?.closest('[data-game]')) {
     search.value = ''; filterProjects();
   }
 }
 window.addEventListener('hashchange', revealAnchor);
 revealAnchor();
 
-const stage = document.getElementById('comparison');
-const slider = document.getElementById('reveal');
-function setPosition(value) {
-  const position = Math.max(0, Math.min(100, Number(value)));
-  stage.style.setProperty('--reveal', `${position}%`);
-  slider.value = String(position);
-  slider.setAttribute('aria-valuetext', `${Math.round(position)}% without fix, ${Math.round(100 - position)}% with fix`);
+// Each game owns its own comparison controls and image status.
+for (const visual of document.querySelectorAll('.project-visual')) {
+  const stage = visual.querySelector('.comparison');
+  const slider = visual.querySelector('input[type="range"]');
+  if (!stage || !slider) continue;
+  function setPosition(value) {
+    const position = Math.max(0, Math.min(100, Number(value)));
+    stage.style.setProperty('--reveal', `${position}%`);
+    slider.value = String(position);
+    slider.setAttribute('aria-valuetext', `${Math.round(position)}% without fix, ${Math.round(100 - position)}% with fix`);
+  }
+  slider.addEventListener('input', () => setPosition(slider.value));
+  function fromPointer(event) {
+    const bounds = stage.getBoundingClientRect();
+    setPosition((event.clientX - bounds.left) / bounds.width * 100);
+  }
+  stage.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || !event.isPrimary) return;
+    stage.setPointerCapture(event.pointerId);
+    fromPointer(event);
+  });
+  stage.addEventListener('pointermove', event => {if (stage.hasPointerCapture(event.pointerId)) fromPointer(event);});
+  function releasePointer(event) {if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);}
+  stage.addEventListener('pointerup', releasePointer);
+  stage.addEventListener('pointercancel', releasePointer);
+  Promise.all([...stage.querySelectorAll('img')].map(image => image.decode())).catch(() => {
+    const status = visual.querySelector('[role="status"]');
+    if (status) status.textContent = 'A screenshot could not load. Refresh the page or open the full comparison.';
+  });
+  setPosition(slider.value);
 }
-slider.addEventListener('input', () => setPosition(slider.value));
-function fromPointer(event) {
-  const bounds = stage.getBoundingClientRect();
-  setPosition((event.clientX - bounds.left) / bounds.width * 100);
-}
-stage.addEventListener('pointerdown', event => {
-  if (event.button !== 0 || !event.isPrimary) return;
-  stage.setPointerCapture(event.pointerId);
-  fromPointer(event);
-});
-stage.addEventListener('pointermove', event => {if (stage.hasPointerCapture(event.pointerId)) fromPointer(event);});
-function releasePointer(event) {if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);}
-stage.addEventListener('pointerup', releasePointer);
-stage.addEventListener('pointercancel', releasePointer);
-Promise.all([...stage.querySelectorAll('img')].map(image => image.decode())).catch(() => {
-  document.getElementById('image-status').textContent = 'A screenshot could not load. Refresh the page or open the full comparison.';
-});

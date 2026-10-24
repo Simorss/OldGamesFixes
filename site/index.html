@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#101114">
   <meta name="description" content="Small fixes. Better classics. Browse Old Games Fixes for widescreen improvements, interface corrections and useful tools for classic PC games.">
   <meta property="og:title" content="Old Games Fixes — Small fixes. Better classics.">
-  <meta property="og:description" content="Widescreen improvements and useful tools for classic PC games. Download the Emergency 4 Widescreen Fix and Simple Mod Launcher.">
+  <meta property="og:description" content="Widescreen improvements and useful tools for classic PC games. Download fixes for Emergency 4 and The Regiment, plus the Simple Mod Launcher.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://simorss.github.io/OldGamesFixes/screenshots/with-fix.jpg">
   <title>Old Games Fixes — Small fixes. Better classics.</title>
@@ -37,12 +37,12 @@
   </section>
 
   <section class="collection" id="projects" aria-labelledby="collection-title">
-    <div class="section-heading"><div><p class="eyebrow">THE GAME LIBRARY</p><h2 id="collection-title">Find your game<span class="accent">.</span></h2></div><span class="collection-count">1 GAME</span></div>
+    <div class="section-heading"><div><p class="eyebrow">THE GAME LIBRARY</p><h2 id="collection-title">Find your game<span class="accent">.</span></h2></div><span class="collection-count">2 GAMES</span></div>
     <div class="toolbar">
       <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search the collection…" aria-label="Search projects" autocomplete="off"></label>
     </div>
-    <p class="sr-only" id="results" role="status" aria-live="polite">1 game shown</p>
-    <div id="empty-state" class="empty-state" hidden><h3>No games found.</h3><p>Try “Emergency”, “HUD” or “launcher”, or reset the filters.</p><button type="button" class="button secondary" id="reset">Show all games</button></div>
+    <p class="sr-only" id="results" role="status" aria-live="polite">2 games shown</p>
+    <div id="empty-state" class="empty-state" hidden><h3>No games found.</h3><p>Try “Regiment”, “Emergency”, “FOV” or “launcher”, or reset the filters.</p><button type="button" class="button secondary" id="reset">Show all games</button></div>
 
     <section class="game-group" id="game-emergency4" data-game="emergency4" aria-labelledby="emergency4-title">
 
@@ -78,11 +78,39 @@
     </article>
 
     </section>
+
+    <section class="game-group" id="game-theregiment" data-game="theregiment" aria-labelledby="theregiment-title">
+    <article class="project-card" id="theregiment" data-category="fix" data-search="the regiment sas fov field view viewmodel weapon mouse acceleration smoothing widescreen ultrawide hor+ vert- asi">
+      <div class="project-heading"><h3 class="game-card-title" id="theregiment-title">The Regiment</h3><span class="badge release">RELEASE 1.0</span></div>
+      <div class="project-main">
+        <div class="project-visual">
+          <div class="comparison" id="regiment-comparison" style="--reveal:50%" aria-label="The Regiment before and after comparison" aria-describedby="regiment-comparison-help">
+            <img src="screenshots/theregiment/with-fix.png" width="3440" height="1440" alt="With fix: wider horizontal view and adjusted first-person weapon FOV" draggable="false" loading="lazy">
+            <img src="screenshots/theregiment/without-fix.png" class="before" width="3440" height="1440" alt="Without fix: cropped view and larger first-person weapon" draggable="false" loading="lazy">
+            <div class="image-label before-label">WITHOUT FIX</div><div class="image-label after-label">WITH FIX</div>
+            <div class="divider" aria-hidden="true"><span>‹ ›</span></div>
+          </div>
+          <div class="compare-controls"><span class="eyebrow">SEE THE DIFFERENCE</span><label class="sr-only" for="regiment-reveal">The Regiment comparison position</label><input id="regiment-reveal" type="range" min="0" max="100" value="50" aria-valuetext="50% without fix, 50% with fix"><a href="theregiment/" aria-label="Open the full The Regiment comparison">Expand ↗</a></div>
+          <p class="caption" id="regiment-comparison-help">Drag to compare · Original 3440 × 1440 screenshots, captured at different moments.</p>
+          <p class="caption" id="regiment-image-status" role="status"></p>
+          <noscript><p class="caption"><a href="screenshots/theregiment/with-fix.png">Open the corrected screenshot</a>.</p></noscript>
+        </div>
+        <div class="project-info">
+          <p class="eyebrow">THE REGIMENT</p><h4>FOV Fix</h4>
+          <p class="project-description">See more of the operation. Restore the wider view on ultrawide screens, tune the weapon FOV and remove mouse acceleration and smoothing.</p>
+          <ul class="features"><li><strong>Hor+ field of view</strong><span>Wider horizontal framing with the original vertical view.</span></li><li><strong>Independent weapon FOV</strong><span>Adjust camera and viewmodel separately while playing.</span></li><li><strong>Mouse input</strong><span>Remove acceleration and smoothing; keep sensitivity in the game menu.</span></li><li><strong>Hotkeys &amp; FOV display</strong><span>Remappable controls and a FOV notice after resolution changes.</span></li></ul>
+          <div class="tags"><span>Windows</span><span>ASI plugin</span><span>INI configuration</span></div>
+        </div>
+      </div>
+      <div class="project-footer"><div class="footer-links"><a href="https://github.com/Simorss/OldGamesFixes/blob/main/TheRegiment/README.md">Instructions ↗</a><a href="https://github.com/Simorss/OldGamesFixes/blob/main/TheRegiment/CHANGELOG.md">Changelog ↗</a></div><div class="download-actions"><a class="text-link" href="https://github.com/Simorss/OldGamesFixes/releases/tag/theregiment">Release notes</a><a class="button primary" href="https://github.com/Simorss/OldGamesFixes/releases/download/theregiment/TheRegiment.FOVFix-v1.0.zip">Download v1.0 <span aria-hidden="true">↓</span></a></div></div>
+      <details class="compatibility"><summary>Compatibility &amp; installation notes</summary><div><p>Validated against one 32-bit sas.exe build. Other executables are left unchanged; support for every regional or digital edition is not established.</p><p>Extract the ZIP into the main game folder, preserving system/scripts. The package contains the loader, ASI, INI and ThirteenAG license. Preserve any existing loader or mod DLL. F7/F8 adjust camera FOV; F11/F12 adjust weapon FOV. Restart after editing the INI.</p></div></details>
+    </article>
+    </section>
   </section>
 
   <section class="installation" id="installation" aria-labelledby="install-title"><div><p class="eyebrow">BACK TO THE GAME</p><h2 id="install-title">Less setup.<br>More playtime.</h2><a class="text-link" href="https://github.com/Simorss/OldGamesFixes/issues">Need a hand? Report an issue ↗</a></div><ol class="steps"><li><span class="step-number">01</span><div><h3>Choose your download</h3><p>Get the fix or tool you need. Each project has its own instructions and release notes.</p></div></li><li><span class="step-number">02</span><div><h3>Follow the project instructions</h3><p>Extract the ASI fix beside the game executable, or copy the launcher into place. Keep existing mod and loader files in mind.</p></div></li><li><span class="step-number">03</span><div><h3>Make it yours</h3><p>Adjust the fix’s INI for your resolution, interface proportions and windowed mode. Restart the game after changes.</p></div></li></ol></section>
   <section class="contribute"><div><p class="eyebrow">FOUND SOMETHING THAT NEEDS FIXING?</p><h2>Help the collection grow.</h2><p>Share a bug report, suggest a game or contribute a patch on GitHub.</p></div><a class="button secondary" href="https://github.com/Simorss/OldGamesFixes/issues">Open an issue <span aria-hidden="true">↗</span></a></section>
 </main>
-<footer class="site-footer"><div><a class="footer-brand" href="./">Old Games Fixes<span class="accent">.</span></a><p>Made for another playthrough.</p></div><div class="credits"><p>100% of the work on the Emergency 4 fix, launcher and this website<br class="desktop-break"> was done through <strong>GPT-6.1 Sol</strong>.</p><p>Ultimate ASI Loader is a separate component by <a href="https://github.com/ThirteenAG/Ultimate-ASI-Loader">ThirteenAG</a>.<br>Game names and screenshots belong to their respective owners.</p></div><a class="back-top" href="#" aria-label="Back to top">↑</a></footer>
+<footer class="site-footer"><div><a class="footer-brand" href="./">Old Games Fixes<span class="accent">.</span></a><p>Made for another playthrough.</p></div><div class="credits"><p>100% of the work on the Emergency 4 fix, launcher and this website<br class="desktop-break"> was done through <strong>GPT-6.1 Sol</strong>.</p><p>The Regiment fix was developed with Codex.</p><p>Ultimate ASI Loader is a separate component by <a href="https://github.com/ThirteenAG/Ultimate-ASI-Loader">ThirteenAG</a>.<br>Game names and screenshots belong to their respective owners.</p></div><a class="back-top" href="#" aria-label="Back to top">↑</a></footer>
 </body>
 </html>

@@ -1,0 +1,3 @@
+LIBRARY TheRegiment.FOVFix
+EXPORTS
+    InitializeASI
