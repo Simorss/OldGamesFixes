@@ -34,7 +34,7 @@ jobs:
           mkdir -p _site/emergency4 _site/screenshots
           cp -R site/. _site/
           cp Emergency4/comparison/index.html _site/emergency4/index.html
-          cp Emergency4/screenshots/*.png _site/screenshots/
+          cp Emergency4/screenshots/* _site/screenshots/
           touch _site/.nojekyll
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

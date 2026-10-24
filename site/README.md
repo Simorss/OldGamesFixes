@@ -29,7 +29,7 @@ The game release packages are built separately and do not include website files.
 
 To preview locally, serve the deployment directory with any static HTTP server.
 The workflow assembles that directory from `site/`,
-`Emergency4/comparison/index.html` and `Emergency4/screenshots/*.png`.
+`Emergency4/comparison/index.html` and `Emergency4/screenshots/*`.
 
 100% of the work on this website was done through **GPT-6.1 Sol**.
 The page structure takes inspiration from the project catalogue at

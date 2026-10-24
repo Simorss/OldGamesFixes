@@ -19,5 +19,5 @@ workflow publishes the homepage, this comparison and the screenshots together.
 Changes to `site/`, this page or its screenshots deploy automatically. The
 workflow can also be run manually from the Actions tab.
 
-Screenshots and the website are not included in the game ZIP. The original PNG
+Screenshots and the website are not included in the game ZIP. The original image
 files are kept in `../screenshots/` without resizing, cropping or retouching.

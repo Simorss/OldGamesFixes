@@ -29,7 +29,7 @@ the widescreen view and keeps the HUD proportional and centered when
 
 ### With fix
 
-[![With fix: corrected view and proportional, centered HUD](screenshots/with-fix.png)](screenshots/with-fix.png)
+[![With fix: corrected view and proportional, centered HUD](screenshots/with-fix.jpg)](screenshots/with-fix.jpg)
 
 ## Options and tools
 

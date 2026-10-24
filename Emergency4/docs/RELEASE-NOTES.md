@@ -19,7 +19,7 @@
 
 **With fix**
 
-![With fix: corrected view and proportional, centered HUD](https://raw.githubusercontent.com/Simorss/OldGamesFixes/main/Emergency4/screenshots/with-fix.png)
+![With fix: corrected view and proportional, centered HUD](https://raw.githubusercontent.com/Simorss/OldGamesFixes/main/Emergency4/screenshots/with-fix.jpg)
 
 The captures were taken at different moments. Screenshots and the comparison
 page are hosted separately; the game ZIP still contains only the three runtime files.
