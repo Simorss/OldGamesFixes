@@ -1,5 +1,9 @@
 <div align="center">
 
+<a href="https://simorss.github.io/OldGamesFixes/">
+  <img src="./site/assets/logo.svg" alt="OLD GAMES FIXES — Visit the website" width="420" height="132">
+</a>
+
 # 🎮 Old Games Fixes & Patches
 
 ### Fixes and patches for old games
