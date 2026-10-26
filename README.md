@@ -18,7 +18,7 @@ As a bonus, this repo also includes a few **Italian localization/translation pat
 
 ---
 
-## 🕹️ Supported Games
+## 🕹️ Games
 
 | Game README | Fix Type | Download |
 |------|----------|--------|
