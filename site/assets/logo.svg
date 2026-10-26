@@ -4,6 +4,7 @@
     .wordmark { fill: #1f2328; }
     @media (prefers-color-scheme: dark) { .wordmark { fill: #f1f1ef; } }
   </style>
+  <g transform="translate(23 0)">
   <g transform="translate(30 33)">
     <path d="M8 0h72l-8 66H0z" fill="#ff965d"/>
     <g fill="#101114" transform="translate(0 -7) scale(1.25)">
@@ -12,7 +13,8 @@
     </g>
   </g>
   <g class="wordmark" font-family="Segoe UI, Arial, sans-serif" font-weight="800">
-    <text x="132" y="56" font-size="19" letter-spacing="3">OLD GAMES</text>
-    <text x="130" y="95" font-size="36" letter-spacing="6">FIXES<tspan fill="#ff965d" letter-spacing="0">.</tspan></text>
+    <text x="198" y="56" text-anchor="middle" font-size="19" letter-spacing="3">OLD GAMES</text>
+    <text x="198" y="95" text-anchor="middle" font-size="36" letter-spacing="6">FIXES<tspan fill="#ff965d" letter-spacing="0">.</tspan></text>
+  </g>
   </g>
 </svg>
