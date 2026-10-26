@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://simorss.github.io/OldGamesFixes/">
-  <img src="./site/assets/logo.svg" alt="OLD GAMES FIXES — Visit the website" width="420" height="132">
+  <img src="./site/assets/logo.svg" alt="OLD GAMES FIXES — Visit the website" width="660" height="185">
 </a>
 
 # 🎮 Old Games Fixes & Patches
