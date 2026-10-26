@@ -10,6 +10,8 @@
 
 [![Made with ❤](https://img.shields.io/badge/made%20with-%E2%9D%A4-red.svg)](.)
 
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-0070BA?style=for-the-badge&logo=paypal&logoColor=white)](https://www.paypal.com/paypalme/simoneee21)
+
 </div>
 
 ---
